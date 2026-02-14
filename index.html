@@ -3,224 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise for Someone Special ❤️</title>
-    
+    <title>Valentine Surprise ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
         body {
             font-family: 'Poppins', sans-serif;
             background: radial-gradient(circle, #2d1b33 0%, #0f0c29 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            text-align: center;
-            color: #fff;
-            position: relative;
+            height: 100vh; display: flex; justify-content: center; align-items: center;
+            overflow: hidden; text-align: center; color: #fff; position: relative;
         }
-
-        /* Animated Particles Background */
         .bg-elements { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; }
         .particle { position: absolute; background: rgba(255, 64, 129, 0.4); border-radius: 50%; animation: floatUp 8s infinite linear; }
         @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
-
-        /* Glassmorphism Card */
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 40px;
-            padding: 30px;
-            width: 92%;
-            max-width: 420px;
-            box-shadow: 0 0 35px rgba(255, 20, 147, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 10;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px);
+            border-radius: 40px; padding: 30px; width: 92%; max-width: 420px;
+            box-shadow: 0 0 35px rgba(255, 20, 147, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); z-index: 10;
         }
-
-        /* Stylish Cursive Fonts */
-        h1, h2, .stylish-font { 
-            font-family: 'Dancing Script', cursive; 
-            color: #ff4d94; 
-            text-shadow: 0 0 10px rgba(255, 77, 148, 0.6); 
-        }
-
-        #typewriter { 
-            font-family: 'Dancing Script', cursive; 
-            font-size: 24px; 
-            line-height: 1.6; 
-            color: #ffebf2; 
-            min-height: 100px; 
-            padding: 15px; 
-        }
-
-        /* Glowing Loading Bar */
-        .progress-bar { width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 25px 0; overflow: hidden; }
-        #fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ff007b, #7e57c2); box-shadow: 0 0 15px #ff007b; }
-
-        /* Stylish Buttons */
+        .stylish-font { font-family: 'Dancing Script', cursive; color: #ff4d94; text-shadow: 0 0 10px rgba(255, 77, 148, 0.6); }
+        .heart-loader { font-size: 80px; color: #ff007b; animation: pulse 1s infinite; margin-bottom: 20px; display: block; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .progress-container { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 25px 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
+        #fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ff007b, #ff4d94); }
         .main-btn {
-            font-family: 'Dancing Script', cursive;
-            background: linear-gradient(45deg, #ff007b, #7e57c2);
-            color: white; border: none; padding: 12px 35px; border-radius: 35px;
-            cursor: pointer; font-weight: 700; font-size: 22px; margin-top: 15px;
-            box-shadow: 0 8px 20px rgba(255,0,123,0.5); transition: 0.3s;
-            display: inline-block;
+            font-family: 'Dancing Script', cursive; background: #fff; color: #ff007b; border: none; padding: 12px 35px; border-radius: 35px;
+            cursor: pointer; font-weight: 700; font-size: 22px; margin-top: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
-        .main-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px #ff007b; }
-
-        .no-btn {
-            font-family: 'Dancing Script', cursive;
-            background: transparent; color: #ccc; border: 1px solid #555; 
-            padding: 10px 30px; border-radius: 35px; cursor: pointer; 
-            font-weight: 700; font-size: 20px;
-        }
-
-        /* Gallery Grid */
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-        .gallery img { 
-            width: 100%; height: 90px; object-fit: cover; border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.3); 
-            transform: scale(0); transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .gallery img.show { transform: scale(1); box-shadow: 0 0 15px rgba(255, 77, 148, 0.6); }
-
+        .whatsapp-btn { background: #25D366 !important; color: white !important; font-size: 18px !important; margin-top: 20px !important; }
+        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .gallery img { width: 100%; height: 80px; object-fit: cover; border-radius: 12px; transform: scale(0); transition: 0.6s; }
+        .gallery img.show { transform: scale(1); }
         .hidden { display: none !important; }
-        .panda-gif { width: 150px; margin-bottom: 10px; border-radius: 20px; }
-        .pulse { animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        .custom-input { width: 100%; padding: 12px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.3); color: white; margin-top: 15px; text-align: center; }
     </style>
 </head>
 <body>
-
     <div class="bg-elements" id="bg"></div>
+    <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
 
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="start-screen" class="card">
-        <img src="panda.gif" class="panda-gif" alt="Panda">
-        <h2 style="font-size: 35px;">Hello! ❤️</h2>
-        <p style="margin: 5px 0 15px; opacity: 0.8;">Click to open a little surprise...</p>
-        <button class="main-btn pulse" onclick="initiateAll()">Open Surprise ✨</button>
+    <div id="setup-screen" class="card">
+        <h2 class="stylish-font" style="font-size: 32px;">Surprise Creator ❤️</h2>
+        <input type="file" id="imageInput" accept="image/*" multiple style="display: none;">
+        <button class="main-btn" onclick="document.getElementById('imageInput').click()" style="background: #ff007b; color: #fff;">1. Pick 6 Photos 📸</button>
+        <input type="text" id="userMsg" class="custom-input" placeholder="2. Write a sweet message...">
+        <button id="startBtn" class="main-btn hidden" onclick="startLoading()">Create Surprise ✨</button>
     </div>
 
     <div id="loading-screen" class="card hidden">
-        <img src="panda.gif" class="panda-gif">
-        <h2 id="status" class="stylish-font" style="font-size: 28px;">Checking Cuteness...</h2>
-        <div class="progress-bar"><div id="fill"></div></div>
-        <h1 id="perc" class="stylish-font" style="font-size: 45px; color: #ff4081;">0%</h1>
-        <button id="open-btn" class="hidden main-btn pulse" onclick="triggerHeartOpen()">Open Heart 💌</button>
+        <span class="heart-loader">❤️</span>
+        <h2 class="stylish-font">Cuteness Overload... 😍</h2>
+        <div class="progress-container"><div id="fill"></div></div>
+        <h1 id="perc" class="stylish-font" style="font-size: 45px;">0%</h1>
+        <button id="tap-open-btn" class="main-btn hidden" onclick="showHeartOpen()">Tap to Open 💌</button>
     </div>
 
-    <div id="heart-anim-screen" class="card hidden">
-        <div class="pulse" style="font-size: 75px;">💝</div>
-        <h2 id="heart-text" style="font-size: 35px; margin-top: 20px;"></h2>
+    <div id="heart-screen" class="card hidden">
+        <h2 class="stylish-font" style="font-size: 30px; margin-bottom: 20px;">My heart opens for you... ✨</h2>
+        <div class="heart-loader" style="cursor: pointer;" onclick="revealFinal()">❤️</div>
     </div>
 
-    <div id="proposal-screen" class="card hidden">
-        <img src="panda.gif" class="panda-gif">
-        <h2 style="font-size: 30px; margin: 15px 0;">Will you be my Valentine? 🥺</h2>
-        <div style="display:flex; justify-content:center; gap:15px; margin-top: 10px;">
-            <button class="main-btn" onclick="showFinalMessage()">Yes, Always! 🥰</button>
-            <button id="noBtn" class="no-btn" onmouseover="moveNo()">No 🥺</button>
+    <div id="final-screen" class="card hidden">
+        <div id="typewriter" class="stylish-font" style="font-size: 24px; min-height: 50px;"></div>
+        <div class="gallery" id="photoGallery"></div>
+        <h2 id="final-tag" class="hidden stylish-font" style="margin-top:20px; font-size: 35px;">I Love You! ❤️</h2>
+        <div id="share-section" class="hidden">
+            <button class="main-btn whatsapp-btn" onclick="shareToWA()">Share on WhatsApp 📲</button>
         </div>
-    </div>
-
-    <div id="message-screen" class="card hidden">
-        <img src="panda.gif" style="width: 100px;">
-        <div id="typewriter"></div>
-        <button id="memoriesBtn" class="main-btn hidden" onclick="animateGallery()">Sweet Memories ✨</button>
-        
-        <div class="gallery" id="photoGallery">
-            <img src="photo1.jpg"> <img src="photo2.jpg"> <img src="photo3.jpg">
-            <img src="photo4.jpg"> <img src="photo5.jpg"> <img src="photo6.jpg">
-        </div>
-        <h2 id="final-text" class="hidden stylish-font" style="margin-top:20px; font-size: 35px; color: #fff;">I Love You! ❤️</h2>
     </div>
 
     <script>
         const music = document.getElementById('bgMusic');
-        
-        // --- CUSTOMIZABLE TEXT ---
-        const myCustomMessage = "You are the most beautiful person I know. Every moment with you is special. I want to hold your hand forever. ❤️";
+        const imageInput = document.getElementById('imageInput');
+        const photoGallery = document.getElementById('photoGallery');
 
-        function initiateAll() {
-            music.play();
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('loading-screen').classList.remove('hidden');
-            createParticles();
-            startLoading();
-        }
-
-        function createParticles() {
-            const bg = document.getElementById('bg');
-            for(let i=0; i<25; i++){
-                let p = document.createElement('div'); p.className='particle';
-                p.style.width = p.style.height = (Math.random()*8+4)+'px';
-                p.style.left = Math.random()*100+'vw'; p.style.animationDelay=Math.random()*5+'s';
-                bg.appendChild(p);
+        imageInput.addEventListener('change', function() {
+            if(this.files.length > 0) {
+                photoGallery.innerHTML = '';
+                Array.from(this.files).slice(0, 6).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        photoGallery.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+                document.getElementById('startBtn').classList.remove('hidden');
             }
-        }
+        });
 
         function startLoading() {
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('loading-screen').classList.remove('hidden');
+            createParticles();
             let w = 0;
             const loader = setInterval(() => {
                 w++;
-                if(w<=100){ document.getElementById('fill').style.width=w+'%'; document.getElementById('perc').innerText=w+'%'; }
-                if(w===105){ document.getElementById('status').innerText="Cuteness 120% 😍"; document.getElementById('perc').innerText="120%"; }
-                if(w>=115){ clearInterval(loader); document.getElementById('open-btn').classList.remove('hidden'); }
+                if(w <= 120) {
+                    document.getElementById('fill').style.width = (w/1.2) + '%';
+                    document.getElementById('perc').innerText = w + "%";
+                }
+                if(w == 120) {
+                    clearInterval(loader);
+                    document.getElementById('tap-open-btn').classList.remove('hidden');
+                }
             }, 40);
         }
 
-        function triggerHeartOpen() {
+        function showHeartOpen() {
+            music.play();
             document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('heart-anim-screen').classList.remove('hidden');
-            typeText("heart-text", "Opening for you... ✨", 70, () => {
-                setTimeout(() => {
-                    document.getElementById('heart-anim-screen').classList.add('hidden');
-                    document.getElementById('proposal-screen').classList.remove('hidden');
-                }, 1000);
+            document.getElementById('heart-screen').classList.remove('hidden');
+        }
+
+        function revealFinal() {
+            document.getElementById('heart-screen').classList.add('hidden');
+            document.getElementById('final-screen').classList.remove('hidden');
+            const msg = document.getElementById('userMsg').value || "You are my everything! ❤️";
+            typeText("typewriter", msg, 60, () => {
+                const imgs = document.querySelectorAll('.gallery img');
+                imgs.forEach((img, i) => setTimeout(() => img.classList.add('show'), i * 300));
+                setTimeout(() => { 
+                    document.getElementById('final-tag').classList.remove('hidden'); 
+                    document.getElementById('share-section').classList.remove('hidden');
+                }, imgs.length * 400);
             });
         }
 
-        function showFinalMessage() {
-            document.getElementById('proposal-screen').classList.add('hidden');
-            document.getElementById('message-screen').classList.remove('hidden');
-            typeText("typewriter", myCustomMessage, 50, () => {
-                document.getElementById('memoriesBtn').classList.remove('hidden');
-            });
-        }
-
-        function animateGallery() {
-            document.getElementById('memoriesBtn').classList.add('hidden');
-            const images = document.querySelectorAll('.gallery img');
-            images.forEach((img, index) => {
-                setTimeout(() => img.classList.add('show'), index * 350); 
-            });
-            setTimeout(() => {
-                document.getElementById('final-text').classList.remove('hidden');
-                document.getElementById('final-text').classList.add('pulse');
-            }, images.length * 400);
+        function shareToWA() {
+            const text = "Look at this special Valentine surprise I made: " + window.location.href;
+            window.open("https://wa.me/?text=" + encodeURIComponent(text), '_blank');
         }
 
         function typeText(id, text, speed, callback){
             let i = 0; const el = document.getElementById(id);
             function type(){
-                if(i<text.length){ el.innerHTML += text.charAt(i); i++; setTimeout(type, speed); }
+                if(i < text.length){ el.innerHTML += text.charAt(i); i++; setTimeout(type, speed); }
                 else if(callback) callback();
             }
             type();
         }
 
-        function moveNo(){
-            const no = document.getElementById('noBtn');
-            no.style.position = 'fixed';
-            no.style.left = Math.random()*70+15+'vw'; no.style.top = Math.random()*70+15+'vh';
+        function createParticles() {
+            const bg = document.getElementById('bg');
+            for(let i=0; i<20; i++){
+                let p = document.createElement('div'); p.className='particle';
+                p.style.width = p.style.height = Math.random()*8+4+'px';
+                p.style.left = Math.random()*100+'vw'; p.style.animationDelay=Math.random()*5+'s';
+                bg.appendChild(p);
+            }
         }
     </script>
 </body>
