@@ -4,155 +4,227 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentine Surprise ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-pink: #ff6b95;
+            --stylish-font: 'Dancing Script', cursive;
+            --fancy-font: 'Pacifico', cursive;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle, #2d1b33 0%, #0f0c29 100%);
+            background: linear-gradient(180deg, #fce4ec 0%, #e1bee7 100%);
             height: 100vh; display: flex; justify-content: center; align-items: center;
-            overflow: hidden; text-align: center; color: #fff; position: relative;
+            overflow: hidden; text-align: center; color: #444;
         }
-        .bg-elements { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; }
-        .particle { position: absolute; background: rgba(255, 64, 129, 0.4); border-radius: 50%; animation: floatUp 8s infinite linear; }
-        @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
+
         .card {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px);
-            border-radius: 40px; padding: 30px; width: 92%; max-width: 420px;
-            box-shadow: 0 0 35px rgba(255, 20, 147, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); z-index: 10;
+            background: rgba(255, 255, 255, 0.45); 
+            backdrop-filter: blur(15px);
+            border-radius: 35px; padding: 25px; width: 92%; max-width: 400px;
+            box-shadow: 0 15px 35px rgba(255, 107, 149, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative; z-index: 10;
         }
-        .stylish-font { font-family: 'Dancing Script', cursive; color: #ff4d94; text-shadow: 0 0 10px rgba(255, 77, 148, 0.6); }
-        .heart-loader { font-size: 80px; color: #ff007b; animation: pulse 1s infinite; margin-bottom: 20px; display: block; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-        .progress-container { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 25px 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
-        #fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ff007b, #ff4d94); }
-        .main-btn {
-            font-family: 'Dancing Script', cursive; background: #fff; color: #ff007b; border: none; padding: 12px 35px; border-radius: 35px;
-            cursor: pointer; font-weight: 700; font-size: 22px; margin-top: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+
+        .typing-text { font-family: var(--stylish-font); font-size: 26px; color: #6a1b9a; min-height: 1.2em; display: inline-block; }
+        .letter-box { background: #fff9fa; border: 2px solid #ffcad4; border-radius: 20px; padding: 20px; margin-top: 10px; }
+        .name-highlight { font-family: var(--fancy-font); color: #d81b60; font-size: 30px; display: block; }
+        .propose-text { font-family: var(--stylish-font); color: #ff3385; font-size: 24px; font-weight: bold; }
+
+        .final-quote {
+            font-family: var(--stylish-font); font-size: 19px; color: #d81b60; font-style: italic;
+            margin-top: 15px; line-height: 1.4; opacity: 0; transform: rotate(-3deg); transition: 2s ease;
         }
-        .whatsapp-btn { background: #25D366 !important; color: white !important; font-size: 18px !important; margin-top: 20px !important; }
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .gallery img { width: 100%; height: 80px; object-fit: cover; border-radius: 12px; transform: scale(0); transition: 0.6s; }
-        .gallery img.show { transform: scale(1); }
+        .final-quote.show { opacity: 1; transform: rotate(-3deg) translateY(0); }
+
+        .btn { border-radius: 30px; border: none; cursor: pointer; transition: 0.3s; font-family: var(--stylish-font); font-size: 22px; width: 100%; margin-top: 10px; }
+        .btn-pink { background: linear-gradient(45deg, #ff3385, #ff6b95); color: white; padding: 12px 25px; box-shadow: 0 4px 15px rgba(255, 51, 133, 0.3); }
+        .btn-outline { background: white; color: var(--primary-pink); border: 2px solid var(--primary-pink); padding: 10px 25px; font-size: 18px; }
+
+        #muteBtn {
+            position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; border-radius: 50%;
+            background: white; border: none; cursor: pointer; z-index: 1000; font-size: 20px;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        input, textarea { 
+            width: 100%; padding: 12px; margin: 10px 0; border-radius: 15px; border: 1.5px solid #ffdae3; 
+            outline: none; background: rgba(255, 255, 255, 0.7); font-family: var(--stylish-font); font-size: 20px;
+        }
+        .upload-box { border: 2px dashed #ffb3c1; padding: 20px; border-radius: 20px; cursor: pointer; color: #ff85a1; font-family: var(--stylish-font); font-size: 20px; }
+
+        .progress-container { width: 100%; height: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 10px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ff758c, #ff7eb3); transition: 0.1s linear; }
+        .perc-val { font-size: 30px; font-weight: 800; color: #ff6b95; font-family: var(--fancy-font); }
+
+        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; max-height: 220px; overflow-y: auto; }
+        .photo-gallery img { width: 100%; border-radius: 12px; opacity: 0; transform: scale(0.8); transition: 0.6s ease-out; border: 2px solid white; }
+        .photo-gallery img.show { opacity: 1; transform: scale(1); }
+
         .hidden { display: none !important; }
-        .custom-input { width: 100%; padding: 12px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.3); color: white; margin-top: 15px; text-align: center; }
+        .pre-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+        .pre-grid img { width: 100%; height: 50px; object-fit: cover; border-radius: 8px; }
     </style>
 </head>
 <body>
-    <div class="bg-elements" id="bg"></div>
+
+    <button id="muteBtn" onclick="toggleMute()">🎵</button>
     <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
 
-    <div id="setup-screen" class="card">
-        <h2 class="stylish-font" style="font-size: 32px;">Surprise Creator ❤️</h2>
-        <input type="file" id="imageInput" accept="image/*" multiple style="display: none;">
-        <button class="main-btn" onclick="document.getElementById('imageInput').click()" style="background: #ff007b; color: #fff;">1. Pick 6 Photos 📸</button>
-        <input type="text" id="userMsg" class="custom-input" placeholder="2. Write a sweet message...">
-        <button id="startBtn" class="main-btn hidden" onclick="startLoading()">Create Surprise ✨</button>
+    <div id="step-1" class="card">
+        <h1 class="title-stylish">Surprise Creator ❤️</h1>
+        <input type="text" id="pName" placeholder="Partner Name ✨">
+        <textarea id="pMsg" rows="3" placeholder="Write a special message..."></textarea>
+        <div class="upload-box" onclick="document.getElementById('fileIn').click()">📤 Upload 6 Sweet Photos</div>
+        <input type="file" id="fileIn" accept="image/*" multiple hidden>
+        <div id="preGrid" class="pre-grid"></div>
+        <button class="btn btn-pink" onclick="goToStep2()">Generate Surprise ✨</button>
     </div>
 
-    <div id="loading-screen" class="card hidden">
-        <span class="heart-loader">❤️</span>
-        <h2 class="stylish-font">Cuteness Overload... 😍</h2>
-        <div class="progress-container"><div id="fill"></div></div>
-        <h1 id="perc" class="stylish-font" style="font-size: 45px;">0%</h1>
-        <button id="tap-open-btn" class="main-btn hidden" onclick="showHeartOpen()">Tap to Open 💌</button>
+    <div id="step-2" class="card hidden">
+        <div style="font-size:50px;">🎉</div>
+        <h2 class="title-stylish">Ready to see it?</h2>
+        <button class="btn btn-pink" onclick="startLoading()">🪄 Preview Page</button>
     </div>
 
-    <div id="heart-screen" class="card hidden">
-        <h2 class="stylish-font" style="font-size: 30px; margin-bottom: 20px;">My heart opens for you... ✨</h2>
-        <div class="heart-loader" style="cursor: pointer;" onclick="revealFinal()">❤️</div>
+    <div id="step-3" class="card hidden">
+        <h1 class="title-stylish">Cuteness Loading...</h1>
+        <div class="progress-container"><div id="fill" class="progress-fill"></div></div>
+        <div id="perc" class="perc-val">0%</div>
+        <button id="tapBtn" class="btn hidden" style="background:white; color:#ff3385;" onclick="showTextAnim()">Tap to Open 💌</button>
     </div>
 
-    <div id="final-screen" class="card hidden">
-        <div id="typewriter" class="stylish-font" style="font-size: 24px; min-height: 50px;"></div>
-        <div class="gallery" id="photoGallery"></div>
-        <h2 id="final-tag" class="hidden stylish-font" style="margin-top:20px; font-size: 35px;">I Love You! ❤️</h2>
-        <div id="share-section" class="hidden">
-            <button class="main-btn whatsapp-btn" onclick="shareToWA()">Share on WhatsApp 📲</button>
+    <div id="step-4" class="card hidden">
+        <div style="font-size:40px; margin-bottom:15px;">💖</div>
+        <div id="animatedText" class="typing-text"></div>
+        <button id="nextAfterTyping" class="btn btn-pink hidden" onclick="goToValentinePropose()">Next ✨</button>
+    </div>
+
+    <div id="step-5" class="card hidden">
+        <img src="panda.gif" style="width: 120px; margin-bottom: 10px; border-radius: 15px;">
+        <div class="letter-box">
+            <span id="finalName" class="name-highlight"></span>
+            <span class="propose-text">Will you be my Valentine? 🥺</span>
+        </div>
+        <div style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
+            <button class="btn btn-pink" style="padding:10px 30px; width: auto;" onclick="showMemories()">YES 🥰</button>
+            <button id="noBtn" class="btn" style="background:#eee; color:#888; padding:10px 30px; width: auto;" onmouseover="moveNo()">NO 🥺</button>
+        </div>
+    </div>
+
+    <div id="step-6" class="card hidden">
+        <h2 id="galleryTitle" class="title-stylish" style="font-size: 20px;"></h2>
+        <div id="photoGallery" class="photo-gallery"></div>
+        <p id="finalQuoteText" class="final-quote">
+            "I fell in love with you because of the million things you never knew you were doing."
+        </p>
+        <h3 class="name-highlight" style="margin-top:10px; font-size: 22px;">Forever Yours! ❤️</h3>
+        
+        <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
+            <button class="btn btn-pink" onclick="copyMyLink()">🔗 Copy Surprise Link</button>
+            <button class="btn btn-outline" onclick="location.reload()">🎁 Generate New Surprise</button>
         </div>
     </div>
 
     <script>
-        const music = document.getElementById('bgMusic');
-        const imageInput = document.getElementById('imageInput');
-        const photoGallery = document.getElementById('photoGallery');
+        let imgs = [];
+        const audio = document.getElementById('bgMusic');
 
-        imageInput.addEventListener('change', function() {
-            if(this.files.length > 0) {
-                photoGallery.innerHTML = '';
-                Array.from(this.files).slice(0, 6).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        photoGallery.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                });
-                document.getElementById('startBtn').classList.remove('hidden');
-            }
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            document.getElementById('muteBtn').innerText = audio.muted ? "🔇" : "🎵";
+        }
+
+        document.getElementById('fileIn').addEventListener('change', function() {
+            const grid = document.getElementById('preGrid'); grid.innerHTML = ''; imgs = [];
+            Array.from(this.files).slice(0, 6).forEach(f => {
+                const r = new FileReader();
+                r.onload = (e) => {
+                    imgs.push(e.target.result);
+                    const i = document.createElement('img'); i.src = e.target.result; grid.appendChild(i);
+                }
+                r.readAsDataURL(f);
+            });
         });
 
+        function goToStep2() {
+            if(!document.getElementById('pName').value) return alert("Enter Name!");
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.remove('hidden');
+        }
+
         function startLoading() {
-            document.getElementById('setup-screen').classList.add('hidden');
-            document.getElementById('loading-screen').classList.remove('hidden');
-            createParticles();
+            audio.play();
+            document.getElementById('step-2').classList.add('hidden');
+            document.getElementById('step-3').classList.remove('hidden');
             let w = 0;
-            const loader = setInterval(() => {
+            const interval = setInterval(() => {
                 w++;
                 if(w <= 120) {
                     document.getElementById('fill').style.width = (w/1.2) + '%';
                     document.getElementById('perc').innerText = w + "%";
-                }
-                if(w == 120) {
-                    clearInterval(loader);
-                    document.getElementById('tap-open-btn').classList.remove('hidden');
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('tapBtn').classList.remove('hidden');
                 }
             }, 40);
         }
 
-        function showHeartOpen() {
-            music.play();
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('heart-screen').classList.remove('hidden');
-        }
-
-        function revealFinal() {
-            document.getElementById('heart-screen').classList.add('hidden');
-            document.getElementById('final-screen').classList.remove('hidden');
-            const msg = document.getElementById('userMsg').value || "You are my everything! ❤️";
-            typeText("typewriter", msg, 60, () => {
-                const imgs = document.querySelectorAll('.gallery img');
-                imgs.forEach((img, i) => setTimeout(() => img.classList.add('show'), i * 300));
-                setTimeout(() => { 
-                    document.getElementById('final-tag').classList.remove('hidden'); 
-                    document.getElementById('share-section').classList.remove('hidden');
-                }, imgs.length * 400);
-            });
-        }
-
-        function shareToWA() {
-            const text = "Look at this special Valentine surprise I made: " + window.location.href;
-            window.open("https://wa.me/?text=" + encodeURIComponent(text), '_blank');
-        }
-
-        function typeText(id, text, speed, callback){
-            let i = 0; const el = document.getElementById(id);
-            function type(){
-                if(i < text.length){ el.innerHTML += text.charAt(i); i++; setTimeout(type, speed); }
-                else if(callback) callback();
+        function showTextAnim() {
+            document.getElementById('step-3').classList.add('hidden');
+            document.getElementById('step-4').classList.remove('hidden');
+            const fullText = document.getElementById('pMsg').value || "You are special!";
+            const textDiv = document.getElementById('animatedText');
+            let index = 0;
+            function type() {
+                if (index < fullText.length) {
+                    textDiv.innerHTML += fullText.charAt(index); index++;
+                    setTimeout(type, 80);
+                } else {
+                    document.getElementById('nextAfterTyping').classList.remove('hidden');
+                }
             }
             type();
         }
 
-        function createParticles() {
-            const bg = document.getElementById('bg');
-            for(let i=0; i<20; i++){
-                let p = document.createElement('div'); p.className='particle';
-                p.style.width = p.style.height = Math.random()*8+4+'px';
-                p.style.left = Math.random()*100+'vw'; p.style.animationDelay=Math.random()*5+'s';
-                bg.appendChild(p);
-            }
+        function goToValentinePropose() {
+            document.getElementById('step-4').classList.add('hidden');
+            document.getElementById('step-5').classList.remove('hidden');
+            document.getElementById('finalName').innerText = document.getElementById('pName').value;
+        }
+
+        function showMemories() {
+            document.getElementById('step-5').classList.add('hidden');
+            document.getElementById('step-6').classList.remove('hidden');
+            document.getElementById('galleryTitle').innerHTML = `${document.getElementById('pName').value}'s Memories ✨`;
+            const gallery = document.getElementById('photoGallery');
+            gallery.innerHTML = '';
+            imgs.forEach((src, idx) => {
+                const img = document.createElement('img'); img.src = src;
+                gallery.appendChild(img);
+                setTimeout(() => img.classList.add('show'), idx * 300);
+            });
+            setTimeout(() => document.getElementById('finalQuoteText').classList.add('show'), 1000);
+        }
+
+        function copyMyLink() {
+            const el = document.createElement('textarea');
+            el.value = window.location.href;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert("Surprise Link Copied! 🔗");
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            btn.style.position = 'absolute';
+            btn.style.left = Math.random() * 70 + '%';
+            btn.style.top = Math.random() * 70 + '%';
         }
     </script>
 </body>
