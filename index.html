@@ -6,77 +6,62 @@
     <title>Valentine Surprise Maker ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --primary-pink: #ff6b95; 
-            --stylish-font: 'Dancing Script', cursive; 
-            --fancy-font: 'Pacifico', cursive; 
-        }
-
+        :root { --p: #ff6b95; --s: 'Dancing Script', cursive; --f: 'Pacifico', cursive; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
+        
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(180deg, #fce4ec 0%, #e1bee7 100%);
-            height: 100vh; display: flex; justify-content: center; align-items: center;
-            flex-direction: column; overflow: hidden; text-align: center; color: #444;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            flex-direction: column; text-align: center; color: #444; padding: 20px;
         }
 
-        /* Brand Logo Signature */
-        .brand-logo {
-            font-family: var(--fancy-font);
-            font-size: 16px;
-            color: rgba(216, 27, 96, 0.7);
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-            animation: fadeInLogo 2s ease;
-        }
-
-        @keyframes fadeInLogo { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .brand-logo { font-family: var(--f); font-size: 16px; color: rgba(216, 27, 96, 0.7); margin-bottom: 12px; }
 
         .card {
-            background: rgba(255, 255, 255, 0.45); 
-            backdrop-filter: blur(15px);
-            border-radius: 35px; padding: 25px; width: 92%; max-width: 400px;
-            box-shadow: 0 15px 35px rgba(255, 107, 149, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            position: relative; z-index: 10;
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(15px);
+            border-radius: 30px; padding: 25px; width: 100%; max-width: 400px;
+            box-shadow: 0 15px 35px rgba(255, 107, 149, 0.2); border: 1px solid white;
         }
-
-        /* Improved Photo Animation */
-        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; max-height: 220px; overflow-y: auto; padding: 5px; }
-        .photo-gallery img { 
-            width: 100%; border-radius: 12px; opacity: 0; 
-            transform: scale(0.3) rotate(-15deg); 
-            transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 3px solid white; box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-        .photo-gallery img.show { opacity: 1; transform: scale(1) rotate(0deg); }
-
-        .typing-text { font-family: var(--stylish-font); font-size: 26px; color: #6a1b9a; min-height: 1.5em; line-height: 1.3; }
-        .letter-box { background: #fff9fa; border: 2px solid #ffcad4; border-radius: 20px; padding: 20px; margin-top: 10px; }
-        .name-highlight { font-family: var(--fancy-font); color: #d81b60; font-size: 28px; display: block; }
-
-        .btn { border-radius: 30px; border: none; cursor: pointer; transition: 0.3s; font-family: var(--stylish-font); font-size: 22px; width: 100%; margin-top: 10px; padding: 10px; }
-        .btn-pink { background: linear-gradient(45deg, #ff3385, #ff6b95); color: white; box-shadow: 0 4px 15px rgba(255, 51, 133, 0.3); }
 
         input, textarea { 
-            width: 100%; padding: 12px; margin: 8px 0; border-radius: 15px; border: 1.5px solid #ffdae3; 
-            outline: none; background: rgba(255, 255, 255, 0.7); font-family: var(--stylish-font); font-size: 18px;
+            width: 100%; padding: 12px; margin: 10px 0; border-radius: 12px; 
+            border: 1px solid #ffdae3; outline: none; font-size: 14px; background: rgba(255,255,255,0.8);
         }
 
-        #muteBtn {
-            position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%;
-            background: white; border: none; cursor: pointer; z-index: 1000; font-size: 18px;
-            display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        /* Upload Area like your screenshot */
+        .upload-container {
+            border: 2px dashed #bbb; border-radius: 15px; padding: 20px;
+            margin: 15px 0; cursor: pointer; background: #fff; transition: 0.3s;
         }
+        .upload-container:hover { border-color: var(--p); background: #fff9fa; }
+        .upload-icon { font-size: 35px; color: #aaa; margin-bottom: 5px; }
+
+        /* Preview Gallery Grid */
+        .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .preview-grid img { 
+            width: 100%; height: 80px; object-fit: cover; border-radius: 10px; 
+            border: 2px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        }
+
+        .btn { border-radius: 25px; border: none; cursor: pointer; font-family: var(--s); font-size: 22px; width: 100%; padding: 12px; margin-top: 15px; transition: 0.3s; }
+        .btn-p { background: linear-gradient(45deg, #ff3385, #ff6b95); color: white; box-shadow: 0 5px 15px rgba(255,51,133,0.3); }
+        .btn-p:active { transform: scale(0.95); }
 
         .hidden { display: none !important; }
 
-        .final-quote {
-            font-family: var(--stylish-font); font-size: 19px; color: #d81b60; font-style: italic;
-            margin-top: 15px; opacity: 0; transform: rotate(-3deg); transition: 2.5s ease;
+        /* Surprise Elements */
+        .typing-text { font-family: var(--s); font-size: 26px; color: #6a1b9a; min-height: 1.5em; line-height: 1.4; }
+        .letter-box { background: #fff; border: 1px solid #ffdae3; border-radius: 20px; padding: 20px; margin-top: 20px; }
+        
+        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+        .photo-gallery img { 
+            width: 100%; border-radius: 15px; opacity: 0; transform: translateY(20px); 
+            transition: 0.8s ease; border: 3px solid white; 
         }
-        .final-quote.show { opacity: 1; }
+        .photo-gallery img.show { opacity: 1; transform: translateY(0); }
+
+        #muteBtn { position: fixed; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 100; }
     </style>
 </head>
 <body>
@@ -86,59 +71,85 @@
     <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
 
     <div id="step-1" class="card">
-        <h2 style="font-family: var(--fancy-font); color: var(--primary-pink); font-size: 22px;">Surprise Maker ❤️</h2>
+        <h2 style="font-family: var(--f); color: var(--p); font-size: 22px; margin-bottom: 10px;">Surprise Maker ❤️</h2>
         <input type="text" id="pName" placeholder="Partner's Name">
-        <textarea id="pMsg" rows="2" placeholder="Write a romantic message..."></textarea>
-        <p style="font-size: 11px; color: var(--primary-pink); margin-top: 5px;">Paste 6 Photo Links (One per line):</p>
-        <textarea id="imgUrls" rows="4" placeholder="https://site.com/photo1.jpg&#10;https://site.com/photo2.jpg"></textarea>
-        <button class="btn btn-pink" onclick="generateSurprise()">Generate & Copy Link ✨</button>
+        <textarea id="pMsg" rows="3" placeholder="Write a sweet message..."></textarea>
+        
+        <div class="upload-container" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📤</div>
+            <p style="font-size: 13px; color: #777;">Click to upload 6 photos</p>
+            <input type="file" id="fileInput" accept="image/*" multiple hidden>
+        </div>
+
+        <div id="previewGrid" class="preview-grid"></div>
+        <p id="pCount" style="font-size: 12px; color: var(--p); margin-top: 8px; font-weight: bold;"></p>
+
+        <button class="btn btn-p" onclick="generateSurprise()">Generate Surprise ✨</button>
     </div>
 
     <div id="step-loading" class="card hidden">
-        <h2 style="font-family: var(--fancy-font); color: var(--primary-pink);">Loading Magic...</h2>
-        <h1 id="perc" style="font-size: 50px; color: var(--primary-pink); font-family: var(--fancy-font);">0%</h1>
-        <button id="tapBtn" class="btn hidden" style="background:white; color:#ff3385;" onclick="startTyping()">Tap to Open 💌</button>
+        <h2 style="font-family: var(--f); color: var(--p);">Magic is Loading...</h2>
+        <h1 id="perc" style="font-size: 50px; color: var(--p); margin: 15px 0;">0%</h1>
+        <button id="tapBtn" class="btn btn-p hidden" onclick="startTyping()">Open Letter 💌</button>
     </div>
 
     <div id="step-typing" class="card hidden">
-        <div style="font-size:40px; margin-bottom:10px;">💖</div>
         <div id="animatedText" class="typing-text"></div>
-        <button id="nextBtn" class="btn btn-pink hidden" onclick="showPropose()">Next ✨</button>
+        <button id="nextBtn" class="btn btn-p hidden" onclick="showPropose()">Next ✨</button>
     </div>
 
     <div id="step-propose" class="card hidden">
-        <img src="panda.gif" style="width: 120px; margin-bottom: 10px; border-radius: 15px;">
+        <img src="https://media.tenor.com/7p48-O7N57IAAAAi/panda-cute.gif" style="width: 120px; margin-bottom: 10px;">
         <div class="letter-box">
-            <span id="displayPartnerName" class="name-highlight"></span>
-            <p style="font-family: var(--stylish-font); font-size: 22px; color: var(--primary-pink);">Will you be my Valentine? 🥺</p>
+            <h3 id="displayN" style="font-family: var(--f); color: var(--p); margin-bottom: 10px;"></h3>
+            <p style="font-family: var(--s); font-size: 24px;">Will you be my Valentine? 🥺</p>
         </div>
-        <button class="btn btn-pink" onclick="showFinal()">YES 🥰</button>
-        <button id="noBtn" class="btn" style="background:#eee; color:#888;" onmouseover="moveNo()">NO 🥺</button>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn btn-p" onclick="showFinal()">YES 🥰</button>
+            <button class="btn" id="noBtn" style="background: #eee; color: #999;" onmouseover="moveNo()">NO 🥺</button>
+        </div>
     </div>
 
     <div id="step-final" class="card hidden">
-        <h2 id="galleryTitle" style="font-family: var(--fancy-font); color: var(--primary-pink); font-size: 20px;"></h2>
-        <div id="photoGallery" class="photo-gallery"></div>
-        <p id="finalQuoteText" class="final-quote">
-            "I fell in love with you because of the million things you never knew you were doing."
-        </p>
-        <h3 class="name-highlight" style="margin-top:10px; font-size: 22px;">Forever Yours! ❤️</h3>
-        <button class="btn btn-pink" style="font-size: 16px;" onclick="copyCurrentLink()">🔗 Copy Surprise Link</button>
+        <h2 style="font-family: var(--f); color: var(--p); font-size: 20px;">Our Memories ✨</h2>
+        <div id="finalGallery" class="photo-gallery"></div>
+        <p style="font-family: var(--s); font-size: 20px; margin-top: 20px; color: #d81b60;">"Forever Yours! ❤️"</p>
+        <button class="btn btn-p" style="font-size: 16px;" onclick="copyLink()">🔗 Copy Surprise Link</button>
         <button class="btn" style="font-size: 12px; background:none; color:#888;" onclick="location.href=window.location.origin+window.location.pathname">Create New 🎁</button>
     </div>
 
     <script>
-        let pName = "", pMsg = "", pPhotos = [];
+        let pName, pMsg, pImgs = [];
         const audio = document.getElementById('bgMusic');
 
-        // Check URL for data on load
+        // --- ফাইল সিলেক্ট এবং প্রিভিউ গ্যালারি ---
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files).slice(0, 6);
+            const grid = document.getElementById('previewGrid');
+            const countTxt = document.getElementById('pCount');
+            grid.innerHTML = ''; pImgs = [];
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    pImgs.push(ev.target.result);
+                    const img = document.createElement('img');
+                    img.src = ev.target.result;
+                    grid.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+            countTxt.innerText = `Photos Selected: ${files.length}/6`;
+        });
+
+        // --- URL চেক করা (লিঙ্ক ওপেন করলে যা হবে) ---
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
             if (params.has('n')) {
                 pName = decodeURIComponent(params.get('n'));
                 pMsg = decodeURIComponent(params.get('m'));
-                const photos = params.get('p');
-                if(photos) pPhotos = photos.split(',');
+                const saved = localStorage.getItem('v_photos');
+                if(saved) pImgs = JSON.parse(saved);
 
                 document.getElementById('step-1').classList.add('hidden');
                 document.getElementById('step-loading').classList.remove('hidden');
@@ -147,17 +158,14 @@
         };
 
         function generateSurprise() {
-            const name = document.getElementById('pName').value;
-            const msg = document.getElementById('pMsg').value;
-            const urls = document.getElementById('imgUrls').value.split('\n').filter(u => u.trim() !== "").join(',');
+            const n = document.getElementById('pName').value;
+            const m = document.getElementById('pMsg').value;
+            if(!n || !m || pImgs.length === 0) return alert("Please fill Name, Message and Upload Photos!");
 
-            if(!name || !msg || !urls) return alert("Please fill all the boxes!");
-
-            const finalUrl = `${window.location.origin}${window.location.pathname}?n=${encodeURIComponent(name)}&m=${encodeURIComponent(msg)}&p=${encodeURIComponent(urls)}`;
-            
-            navigator.clipboard.writeText(finalUrl);
-            alert("Success! Your unique surprise link is ready and copied to clipboard. 🔗");
-            window.location.href = finalUrl;
+            localStorage.setItem('v_photos', JSON.stringify(pImgs));
+            const url = `${window.location.origin}${window.location.pathname}?n=${encodeURIComponent(n)}&m=${encodeURIComponent(m)}`;
+            window.history.pushState({}, '', url);
+            location.reload();
         }
 
         function runLoading() {
@@ -175,9 +183,9 @@
             document.getElementById('step-typing').classList.remove('hidden');
             let i = 0;
             function type() {
-                if (i < pMsg.length) {
+                if(i < pMsg.length) {
                     document.getElementById('animatedText').innerHTML += pMsg.charAt(i);
-                    i++; setTimeout(type, 70);
+                    i++; setTimeout(type, 60);
                 } else { document.getElementById('nextBtn').classList.remove('hidden'); }
             }
             type();
@@ -186,29 +194,24 @@
         function showPropose() {
             document.getElementById('step-typing').classList.add('hidden');
             document.getElementById('step-propose').classList.remove('hidden');
-            document.getElementById('displayPartnerName').innerText = pName;
+            document.getElementById('displayN').innerText = `Dear ${pName},`;
         }
 
         function showFinal() {
             document.getElementById('step-propose').classList.add('hidden');
             document.getElementById('step-final').classList.remove('hidden');
-            document.getElementById('galleryTitle').innerText = `${pName}'s Memories ✨`;
-            
-            const gallery = document.getElementById('photoGallery');
-            gallery.innerHTML = '';
-            pPhotos.forEach((src, idx) => {
+            const gallery = document.getElementById('finalGallery');
+            pImgs.forEach((src, idx) => {
                 const img = document.createElement('img');
-                img.src = src.trim();
-                img.onerror = () => img.src = "https://via.placeholder.com/150/ff6b95/ffffff?text=❤️";
+                img.src = src;
                 gallery.appendChild(img);
-                setTimeout(() => img.classList.add('show'), 400 + (idx * 300));
+                setTimeout(() => img.classList.add('show'), 300 + (idx * 200));
             });
-            setTimeout(() => document.getElementById('finalQuoteText').classList.add('show'), 1500);
         }
 
-        function copyCurrentLink() {
+        function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Link Copied! ❤️");
+            alert("Surprise Link Copied! ❤️");
         }
 
         function toggleMute() { audio.muted = !audio.muted; }
