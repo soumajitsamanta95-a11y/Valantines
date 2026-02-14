@@ -17,7 +17,7 @@
             position: relative;
         }
 
-        /* Floating Stars & Hearts */
+        /* Floating Stars Animation */
         .star { position: absolute; color: #ffeb3b; font-size: 15px; animation: float 6s linear infinite; opacity: 0.8; z-index: 0; }
         @keyframes float {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
@@ -66,12 +66,12 @@
     <div id="step-1" class="card">
         <h2 style="font-family: var(--f); color: var(--p);">Surprise Maker ❤️</h2>
         <input type="text" id="pName" placeholder="Partner Name" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd; outline:none;">
-        <textarea id="pMsg" placeholder="Romantic Message..." rows="3" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd; outline:none; resize:none;"></textarea>
+        <textarea id="pMsg" placeholder="Write a romantic message..." rows="3" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd; outline:none; resize:none;"></textarea>
         <div id="dropZone" style="border: 2px dashed #ff4d94; padding: 20px; border-radius: 15px; cursor: pointer;" onclick="document.getElementById('fileInput').click()">
-            <p id="upTxt" style="font-size: 14px; color: #ff4d94;">📤 Upload 6 Photos</p>
+            <p id="upTxt" style="font-size: 14px; color: #ff4d94; font-weight: bold;">📤 Upload 6 Photos</p>
             <input type="file" id="fileInput" accept="image/*" multiple hidden>
         </div>
-        <button class="btn-bar" onclick="generateLink()" style="background: var(--p); color: white;">Generate & Copy Link ✨</button>
+        <button class="btn-bar" id="genBtn" onclick="generateLink()" style="background: var(--p); color: white;">Generate & Copy Link ✨</button>
     </div>
 
     <div id="step-loading" class="card hidden">
@@ -93,7 +93,7 @@
 
     <div id="step-propose" class="card hidden">
         <img src="https://media.tenor.com/79_u2v7iN3oAAAAj/bear-panda.gif" style="width: 130px;">
-        <p id="proposeName" style="font-family: var(--f); color: var(--p);"></p>
+        <p id="proposeName" style="font-family: var(--f); color: var(--p); font-size: 22px;"></p>
         <p style="font-family: var(--s); font-size: 28px;">Will you be my Valentine? 🥺</p>
         <div class="btn-row">
             <button class="yes-btn" id="yesBtn" onclick="showTypingMsg()">YES 🥰</button>
@@ -116,7 +116,6 @@
         let yesScale = 1;
         const audio = document.getElementById('bgMusic');
 
-        // Stars Background
         function createStars() {
             for (let i = 0; i < 30; i++) {
                 let star = document.createElement('div');
@@ -129,51 +128,76 @@
         }
         createStars();
 
-        // ⚡ IMAGE COMPRESSOR (MB কমানোর জন্য)
+        // ⚡ অত্যাধুনিক ইমেজ কম্প্রেসর (MB কমানোর জন্য)
         async function compressImage(base64Str) {
             return new Promise((resolve) => {
                 const img = new Image();
                 img.src = base64Str;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 400; // ছবি ৪০০ পিক্সেল চওড়া হবে
+                    const MAX_WIDTH = 300; // সাইজ আরও কমানো হলো লিঙ্কের সুবিধার্থে
                     const scaleSize = MAX_WIDTH / img.width;
                     canvas.width = MAX_WIDTH;
                     canvas.height = img.height * scaleSize;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    // কোয়ালিটি ০.৫ মানে ৫০% কমিয়ে সাইজ ছোট করা হবে
-                    resolve(canvas.toDataURL('image/jpeg', 0.5));
+                    resolve(canvas.toDataURL('image/jpeg', 0.4)); // কোয়ালিটি ৪০% রাখা হলো
                 };
             });
         }
 
         document.getElementById('fileInput').addEventListener('change', async function(e) {
             const files = Array.from(e.target.files).slice(0, 6);
-            if(files.length < 1) return;
-            document.getElementById('upTxt').innerText = "⏳ Compressing Photos...";
+            if(files.length === 0) return;
+            
+            const upTxt = document.getElementById('upTxt');
+            const genBtn = document.getElementById('genBtn');
+            
+            upTxt.innerText = "⏳ Compressing... Please wait!";
+            genBtn.disabled = true;
+            genBtn.style.opacity = "0.5";
+            
             pImgs = [];
             for (let file of files) {
                 const reader = new FileReader();
-                const raw = await new Promise(r => { reader.onload = e => r(e.target.result); reader.readAsDataURL(file); });
+                const raw = await new Promise(r => { 
+                    reader.onload = e => r(e.target.result); 
+                    reader.readAsDataURL(file); 
+                });
                 const compressed = await compressImage(raw);
                 pImgs.push(compressed);
             }
-            document.getElementById('upTxt').innerText = "✅ " + pImgs.length + " Photos Ready!";
+            
+            upTxt.innerText = "✅ " + pImgs.length + " Photos Compressed!";
+            genBtn.disabled = false;
+            genBtn.style.opacity = "1";
         });
 
         function generateLink() {
             const n = document.getElementById('pName').value;
             const m = document.getElementById('pMsg').value;
-            if(!n || !m || pImgs.length === 0) return alert("Please add Name, Message and Photos!");
+            
+            if(!n || !m || pImgs.length === 0) {
+                alert("Please fill Name, Message and select Photos!");
+                return;
+            }
             
             const data = { n, m, i: pImgs };
-            // URL ছোট করার জন্য এনকোডিং
-            const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-            const url = window.location.origin + window.location.pathname + "?v=" + encoded;
-            
-            navigator.clipboard.writeText(url);
-            alert("Link Copied! Now send it to your partner. ❤️");
+            try {
+                const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+                const url = window.location.origin + window.location.pathname + "?v=" + encoded;
+                
+                if(url.length > 8000) {
+                    alert("লিঙ্কটি অনেক বড় হয়ে গেছে! দয়া করে কম সাইজের বা কম ছবি (যেমন ৪টি) দিয়ে চেষ্টা করুন।");
+                    return;
+                }
+                
+                navigator.clipboard.writeText(url).then(() => {
+                    alert("Link Generated & Copied! ❤️");
+                });
+            } catch (e) {
+                alert("Error generating link. Try with smaller images.");
+            }
         }
 
         window.onload = () => {
@@ -185,8 +209,13 @@
                 document.getElementById('step-loading').classList.remove('hidden');
                 let w = 0;
                 let int = setInterval(() => {
-                    w += 2; document.getElementById('perc').innerText = w + "%";
-                    if(w >= 100) { clearInterval(int); document.getElementById('step-loading').classList.add('hidden'); document.getElementById('step-tap').classList.remove('hidden'); }
+                    w += 2; 
+                    document.getElementById('perc').innerText = w + "%";
+                    if(w >= 100) { 
+                        clearInterval(int); 
+                        document.getElementById('step-loading').classList.add('hidden'); 
+                        document.getElementById('step-tap').classList.remove('hidden'); 
+                    }
                 }, 50);
             }
         };
