@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine Surprise Maker ❤️</title>
+    <title>Valentine Surprise ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { --p: #ff6b95; --s: 'Dancing Script', cursive; --f: 'Pacifico', cursive; }
@@ -20,54 +20,46 @@
         .brand-logo { font-family: var(--f); font-size: 16px; color: rgba(216, 27, 96, 0.7); margin-bottom: 12px; }
 
         .card {
-            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(15px);
             border-radius: 30px; padding: 25px; width: 100%; max-width: 400px;
             box-shadow: 0 15px 35px rgba(255, 107, 149, 0.2); border: 1px solid white;
-            transition: 0.5s;
+            animation: fadeIn 0.8s ease;
         }
 
-        /* Input Styles */
-        input, textarea { 
-            width: 100%; padding: 12px; margin: 10px 0; border-radius: 12px; 
-            border: 1px solid #ffdae3; outline: none; font-size: 14px; background: rgba(255,255,255,0.8);
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Stylish Buttons */
-        .btn { border-radius: 25px; border: none; cursor: pointer; font-family: var(--s); font-size: 22px; transition: 0.3s; padding: 10px 20px; }
+        /* Generator Area */
+        .upload-area { border: 2px dashed #bbb; border-radius: 15px; padding: 20px; margin: 15px 0; cursor: pointer; background: #fff; }
+        .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+        .preview-grid img { width: 100%; height: 70px; object-fit: cover; border-radius: 8px; border: 2px solid white; }
+
+        /* Loading & Heart */
+        #perc { font-size: 50px; color: var(--p); font-family: var(--f); margin: 10px 0; }
+        .heart-container { position: relative; width: 100px; height: 90px; margin: 30px auto; }
+        .heart { position: absolute; width: 50px; height: 80px; background: var(--p); border-radius: 50px 50px 0 0; transition: 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .heart.left { left: 10px; transform: rotate(-45deg); transform-origin: 100% 100%; }
+        .heart.right { left: 40px; transform: rotate(45deg); transform-origin: 0 100%; }
+        .heart.open-left { transform: rotate(-120deg); }
+        .heart.open-right { transform: rotate(120deg); }
+
+        /* Buttons Style */
+        .btn { border-radius: 25px; border: none; cursor: pointer; font-family: var(--s); font-size: 22px; transition: 0.3s; padding: 12px 25px; }
         .btn-p { background: linear-gradient(45deg, #ff3385, #ff6b95); color: white; box-shadow: 0 5px 15px rgba(255,51,133,0.3); width: 100%; }
-        
-        /* YES/NO Stylish Logic */
-        #yesBtn { font-weight: bold; z-index: 100; display: inline-block; width: auto; min-width: 100px; }
-        #noBtn { background: #eee; color: #888; display: inline-block; width: auto; min-width: 100px; }
+        #yesBtn { display: inline-block; width: auto; z-index: 100; }
+        #noBtn { background: #eee; color: #888; display: inline-block; width: auto; position: relative; }
 
-        /* Upload Area */
-        .upload-container {
-            border: 2px dashed #bbb; border-radius: 15px; padding: 20px;
-            margin: 15px 0; cursor: pointer; background: #fff;
+        /* Stylish Slanted Text */
+        .sweet-text {
+            font-family: var(--s); font-size: 20px; color: #d81b60; margin: 20px 0;
+            transform: rotate(-5deg); line-height: 1.3; font-weight: bold;
         }
-        .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .preview-grid img { width: 100%; height: 70px; object-fit: cover; border-radius: 10px; border: 2px solid white; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+
+        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
+        .photo-gallery img { width: 100%; border-radius: 15px; opacity: 0; transform: scale(0.5); transition: 0.8s ease; border: 3px solid white; }
+        .photo-gallery img.show { opacity: 1; transform: scale(1); }
 
         .hidden { display: none !important; }
-
-        /* Memories Section */
-        .memories-btn { background: #fff; color: var(--p); border: 2.5px solid var(--p); font-family: var(--f); font-size: 18px; margin-top: 20px; padding: 15px; width: 100%; cursor: pointer; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; }
-        .memories-btn:hover { background: var(--p); color: white; }
-
-        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; max-height: 300px; overflow-y: auto; padding: 5px; }
-        .photo-gallery img { 
-            width: 100%; border-radius: 15px; opacity: 0; transform: translateY(30px) rotate(5deg); 
-            transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 3px solid white; 
-        }
-        .photo-gallery img.show { opacity: 1; transform: translateY(0) rotate(0deg); }
-
-        /* Slanted Stylish Text */
-        .sweet-text {
-            font-family: var(--s); font-size: 22px; color: #d81b60; margin: 20px 0;
-            transform: rotate(-4deg); line-height: 1.3; font-weight: bold;
-        }
-
-        #muteBtn { position: fixed; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        #muteBtn { position: fixed; top: 20px; right: 20px; background: white; border-radius: 50%; width: 40px; height: 40px; border: none; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -77,34 +69,48 @@
     <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
 
     <div id="step-1" class="card">
-        <h2 style="font-family: var(--f); color: var(--p); font-size: 22px;">Surprise Maker ❤️</h2>
-        <input type="text" id="pName" placeholder="Partner's Name">
-        <textarea id="pMsg" rows="3" placeholder="Write your special message..."></textarea>
-        
-        <div class="upload-container" onclick="document.getElementById('fileInput').click()">
+        <h2 style="font-family: var(--f); color: var(--p);">Surprise Maker ❤️</h2>
+        <input type="text" id="pName" placeholder="Partner's Name" style="width:100%; padding:10px; margin:10px 0; border-radius:10px; border:1px solid #ddd;">
+        <textarea id="pMsg" placeholder="Write a romantic message..." rows="3" style="width:100%; padding:10px; margin:10px 0; border-radius:10px; border:1px solid #ddd;"></textarea>
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
             <p style="font-size: 13px; color: #777;">📤 Click to upload 6 photos</p>
             <input type="file" id="fileInput" accept="image/*" multiple hidden>
         </div>
         <div id="previewGrid" class="preview-grid"></div>
-        <button class="btn btn-p" onclick="generateSurprise()">Generate & Copy Link ✨</button>
+        <button class="btn btn-p" onclick="generateSurprise()" style="margin-top:10px;">Generate & Copy Link ✨</button>
     </div>
 
     <div id="step-loading" class="card hidden">
-        <h2 style="font-family: var(--f); color: var(--p);">Cuteness Loading...</h2>
-        <h1 id="perc" style="font-size: 50px; color: var(--p); font-family: var(--f);">0%</h1>
-        <button id="tapBtn" class="btn btn-p hidden" onclick="startTyping()">Tap to Open 💌</button>
+        <p style="font-family: var(--f); color: var(--p);">Loading your cuteness...</p>
+        <p style="font-size:13px; color:#888;">a beautiful surprise is loading...</p>
+        <h1 id="perc">0%</h1>
     </div>
 
-    <div id="step-typing" class="card hidden">
-        <div id="animatedText" style="font-family: var(--s); font-size: 26px; color: #6a1b9a; min-height: 1.5em;"></div>
-        <button id="nextBtn" class="btn btn-p hidden" style="margin-top: 25px;" onclick="showPropose()">Next ✨</button>
+    <div id="step-tap" class="card hidden">
+        <h2 style="font-family: var(--f); color: var(--p);">Hold on its too much!</h2>
+        <button class="btn btn-p" style="margin-top:20px;" onclick="startHeartAnim()">Tap to Open 💌</button>
+    </div>
+
+    <div id="step-heart" class="card hidden">
+        <h2 style="font-family: var(--s); font-size: 28px; color: var(--p);">Preparing My Heart...</h2>
+        <div class="heart-container">
+            <div class="heart left" id="hL"></div>
+            <div class="heart right" id="hR"></div>
+        </div>
+        <p id="hTag" style="font-family: var(--s); opacity:0; transition:1s;">My heart open for you ❤️</p>
+    </div>
+
+    <div id="step-msg-page" class="card hidden">
+        <img src="panda.gif" style="width: 100px; margin-bottom: 15px; border-radius: 10px;">
+        <div id="displayMsg" style="font-style: italic; color: #555; margin-bottom: 20px; font-size: 16px; border-left: 4px solid var(--p); padding-left: 10px; text-align: left;"></div>
+        <button class="btn btn-p" onclick="showPropose()">Next ✨</button>
     </div>
 
     <div id="step-propose" class="card hidden">
-        <img src="panda.gif" style="width: 140px; margin-bottom: 10px; border-radius: 15px;">
-        <h3 id="displayN" style="font-family: var(--f); color: var(--p); margin-bottom: 10px;"></h3>
-        <p style="font-family: var(--s); font-size: 24px;">Will you be my Valentine? 🥺</p>
-        <div style="display: flex; gap: 20px; justify-content: center; margin-top: 40px; align-items: center;">
+        <img src="panda.gif" style="width: 120px; margin-bottom: 10px;">
+        <p id="toName" style="font-family: var(--f); color: var(--p); font-size: 18px;"></p>
+        <p style="font-family: var(--s); font-size: 26px;">Will you be my Valentine? 🥺</p>
+        <div style="display:flex; gap:20px; justify-content:center; margin-top:30px; align-items:center;">
             <button class="btn btn-p" id="yesBtn" onclick="showSweetOption()">YES 🥰</button>
             <button class="btn" id="noBtn" onmouseover="moveNo()">NO 🥺</button>
         </div>
@@ -117,22 +123,22 @@
             things you never knew<br>
             you were doing.
         </div>
-        <button class="btn memories-btn" onclick="showFinalGallery()">✨ Sweet Memories ✨</button>
+        <button class="btn btn-p" onclick="showFinalGallery()">💖 Sweet Memories 💖</button>
     </div>
 
     <div id="step-final" class="card hidden">
-        <h2 style="font-family: var(--f); color: var(--p); font-size: 22px;">Forever & Always ✨</h2>
+        <h2 style="font-family: var(--f); color: var(--p);">Our Journey ✨</h2>
         <div id="finalGallery" class="photo-gallery"></div>
-        <button class="btn btn-p" style="font-size: 16px; margin-top: 25px;" onclick="copyLink()">🔗 Copy Surprise Link</button>
-        <button class="btn" style="font-size: 12px; background:none; color:#888; width: 100%;" onclick="location.href=window.location.origin+window.location.pathname">Create New 🎁</button>
+        <p style="font-family: var(--s); font-size: 20px; margin-top: 20px; color: var(--p);">Forever Yours! ❤️</p>
+        <button class="btn btn-p" style="margin-top:20px; font-size:16px;" onclick="copyLink()">🔗 Share Again</button>
     </div>
 
     <script>
         let pImgs = [];
-        let yesSize = 1;
+        let yesScale = 1;
         const audio = document.getElementById('bgMusic');
 
-        // ফাইল সিলেক্ট এবং থাম্বনেইল প্রিভিউ
+        // গ্যালারি থেকে ছবি নিয়ে প্রিভিউ দেখানো
         document.getElementById('fileInput').addEventListener('change', function(e) {
             const files = Array.from(e.target.files).slice(0, 6);
             const grid = document.getElementById('previewGrid');
@@ -149,69 +155,77 @@
             });
         });
 
-        // URL চেক করা
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
             if (params.has('n')) {
+                // যাকে লিঙ্ক পাঠানো হয়েছে সে ছবিগুলো দেখতে পাবে
+                const savedImgs = localStorage.getItem('temp_imgs');
+                if(savedImgs) pImgs = JSON.parse(savedImgs);
+
                 document.getElementById('step-1').classList.add('hidden');
                 document.getElementById('step-loading').classList.remove('hidden');
                 let w = 0;
                 const int = setInterval(() => {
                     w++; document.getElementById('perc').innerText = w + "%";
-                    if(w >= 100) { clearInterval(int); document.getElementById('tapBtn').classList.remove('hidden'); }
-                }, 30);
+                    if(w >= 100) { 
+                        clearInterval(int);
+                        document.getElementById('step-loading').classList.add('hidden');
+                        document.getElementById('step-tap').classList.remove('hidden');
+                    }
+                }, 40);
             }
         };
 
         function generateSurprise() {
             const n = document.getElementById('pName').value;
             const m = document.getElementById('pMsg').value;
-            if(!n || !m || pImgs.length === 0) return alert("Please fill Name, Message and Upload Photos!");
-            
-            // ছবিগুলো লোকাল স্টোরেজে সেভ করা (একই ব্রাউজারে দেখার জন্য)
-            localStorage.setItem('v_photos', JSON.stringify(pImgs));
+            if(!n || !m || pImgs.length === 0) return alert("সব তথ্য পূরণ করো!");
+
+            // লোকাল স্টোরেজে ছবি সেভ করা (যাতে লিঙ্কে পাঠানো যায়)
+            localStorage.setItem('temp_imgs', JSON.stringify(pImgs));
             
             const url = `${window.location.origin}${window.location.pathname}?n=${encodeURIComponent(n)}&m=${encodeURIComponent(m)}`;
             navigator.clipboard.writeText(url);
-            alert("Unique Link Copied! Send it to your partner. ❤️");
+            alert("লিঙ্ক কপি হয়েছে! এখন যাকে পাঠাবে সেও তোমার ছবি দেখতে পাবে। ❤️");
             window.location.href = url;
         }
 
-        function startTyping() {
+        function startHeartAnim() {
             audio.play().catch(() => {});
-            document.getElementById('step-loading').classList.add('hidden');
-            document.getElementById('step-typing').classList.remove('hidden');
+            document.getElementById('step-tap').classList.add('hidden');
+            document.getElementById('step-heart').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('hL').classList.add('open-left');
+                document.getElementById('hR').classList.add('open-right');
+                document.getElementById('hTag').style.opacity = "1";
+                setTimeout(() => {
+                    document.getElementById('step-heart').classList.add('hidden');
+                    showCustomMsg();
+                }, 2500);
+            }, 800);
+        }
+
+        function showCustomMsg() {
+            document.getElementById('step-msg-page').classList.remove('hidden');
             const params = new URLSearchParams(window.location.search);
-            const msg = decodeURIComponent(params.get('m'));
-            let i = 0;
-            function type() {
-                if(i < msg.length) {
-                    document.getElementById('animatedText').innerHTML += msg.charAt(i);
-                    i++; setTimeout(type, 60);
-                } else { document.getElementById('nextBtn').classList.remove('hidden'); }
-            }
-            type();
+            document.getElementById('displayMsg').innerText = decodeURIComponent(params.get('m'));
         }
 
         function showPropose() {
-            document.getElementById('step-typing').classList.add('hidden');
+            document.getElementById('step-msg-page').classList.add('hidden');
             document.getElementById('step-propose').classList.remove('hidden');
             const params = new URLSearchParams(window.location.search);
-            document.getElementById('displayN').innerText = `To ${decodeURIComponent(params.get('n'))},`;
+            document.getElementById('toName').innerText = `To ${decodeURIComponent(params.get('n'))},`;
         }
 
         function moveNo() {
             const no = document.getElementById('noBtn');
             const yes = document.getElementById('yesBtn');
-            
-            // NO বাটন দূরে সরানো
             no.style.position = 'fixed';
             no.style.left = Math.random() * 70 + '%';
             no.style.top = Math.random() * 70 + '%';
-            
-            // YES বাটন বড় করা
-            yesSize += 0.35;
-            yes.style.transform = `scale(${yesSize})`;
+            yesScale += 0.4;
+            yes.style.transform = `scale(${yesScale})`;
         }
 
         function showSweetOption() {
@@ -223,21 +237,17 @@
             document.getElementById('step-sweet-option').classList.add('hidden');
             document.getElementById('step-final').classList.remove('hidden');
             const gallery = document.getElementById('finalGallery');
-            const saved = localStorage.getItem('v_photos');
-            if(saved) {
-                const imgs = JSON.parse(saved);
-                imgs.forEach((src, idx) => {
-                    const img = document.createElement('img');
-                    img.src = src;
-                    gallery.appendChild(img);
-                    setTimeout(() => img.classList.add('show'), 300 + (idx * 200));
-                });
-            }
+            pImgs.forEach((src, idx) => {
+                const img = document.createElement('img');
+                img.src = src;
+                gallery.appendChild(img);
+                setTimeout(() => img.classList.add('show'), 300 + (idx * 200));
+            });
         }
 
         function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Surprise Link Copied! ❤️");
+            alert("লিঙ্ক কপি হয়েছে! ❤️");
         }
 
         function toggleMute() { audio.muted = !audio.muted; }
