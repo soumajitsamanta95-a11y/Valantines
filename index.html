@@ -6,248 +6,162 @@
     <title>Valentine Surprise ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-pink: #ff6b95;
-            --stylish-font: 'Dancing Script', cursive;
-            --fancy-font: 'Pacifico', cursive;
-        }
-
+        :root { --p: #ff6b95; --s: 'Dancing Script', cursive; --f: 'Pacifico', cursive; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, #fce4ec 0%, #e1bee7 100%);
+            font-family: 'Poppins', sans-serif; background: linear-gradient(180deg, #fce4ec 0%, #e1bee7 100%);
             height: 100vh; display: flex; justify-content: center; align-items: center;
             flex-direction: column; overflow: hidden; text-align: center; color: #444;
         }
-
-        /* Brand Logo - Added @soumajit !! */
-        .brand-logo {
-            font-family: var(--fancy-font);
-            font-size: 18px;
-            color: rgba(216, 27, 96, 0.7);
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-            animation: fadeInLogo 2s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        @keyframes fadeInLogo { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
+        .brand-logo { font-family: var(--f); font-size: 16px; color: rgba(216, 27, 96, 0.7); margin-bottom: 10px; }
         .card {
-            background: rgba(255, 255, 255, 0.45); 
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(15px);
             border-radius: 35px; padding: 25px; width: 92%; max-width: 400px;
-            box-shadow: 0 15px 35px rgba(255, 107, 149, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 15px 35px rgba(255, 107, 149, 0.2); border: 1px solid rgba(255, 255, 255, 0.5);
             position: relative; z-index: 10;
         }
-
-        /* Advanced Photo Animation */
-        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; max-height: 220px; overflow-y: auto; padding: 5px; }
+        .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; max-height: 200px; overflow-y: auto; }
         .photo-gallery img { 
-            width: 100%; border-radius: 12px; opacity: 0; 
-            transform: scale(0.3) rotate(-15deg); 
-            transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 3px solid white; box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            width: 100%; border-radius: 12px; opacity: 0; transform: scale(0.3); 
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 3px solid white; 
         }
-        .photo-gallery img.show { opacity: 1; transform: scale(1) rotate(0deg); }
-
-        .typing-text { font-family: var(--stylish-font); font-size: 26px; color: #6a1b9a; min-height: 1.2em; display: inline-block; }
-        .letter-box { background: #fff9fa; border: 2px solid #ffcad4; border-radius: 20px; padding: 20px; margin-top: 10px; }
-        .name-highlight { font-family: var(--fancy-font); color: #d81b60; font-size: 28px; display: block; }
-        .propose-text { font-family: var(--stylish-font); color: #ff3385; font-size: 24px; font-weight: bold; }
-
-        .final-quote {
-            font-family: var(--stylish-font); font-size: 19px; color: #d81b60; font-style: italic;
-            margin-top: 15px; line-height: 1.4; opacity: 0; transform: rotate(-3deg); transition: 2.5s ease;
-        }
-        .final-quote.show { opacity: 1; transform: rotate(-3deg) translateY(0); }
-
-        .btn { border-radius: 30px; border: none; cursor: pointer; transition: 0.3s; font-family: var(--stylish-font); font-size: 22px; width: 100%; margin-top: 10px; }
-        .btn-pink { background: linear-gradient(45deg, #ff3385, #ff6b95); color: white; padding: 12px 25px; box-shadow: 0 4px 15px rgba(255, 51, 133, 0.3); }
-        .btn-outline { background: white; color: var(--primary-pink); border: 2px solid var(--primary-pink); padding: 10px 25px; font-size: 18px; }
-
-        #muteBtn {
-            position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%;
-            background: white; border: none; cursor: pointer; z-index: 1000; font-size: 18px;
-            display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        input, textarea { 
-            width: 100%; padding: 12px; margin: 10px 0; border-radius: 15px; border: 1.5px solid #ffdae3; 
-            outline: none; background: rgba(255, 255, 255, 0.7); font-family: var(--stylish-font); font-size: 20px;
-        }
-        .upload-box { border: 2px dashed #ffb3c1; padding: 20px; border-radius: 20px; cursor: pointer; color: #ff85a1; font-family: var(--stylish-font); font-size: 20px; }
-
-        .progress-container { width: 100%; height: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 10px; margin: 20px 0; overflow: hidden; }
-        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ff758c, #ff7eb3); transition: 0.1s linear; }
-        .perc-val { font-size: 30px; font-weight: 800; color: #ff6b95; font-family: var(--fancy-font); }
-
+        .photo-gallery img.show { opacity: 1; transform: scale(1); }
+        .typing-text { font-family: var(--s); font-size: 24px; color: #6a1b9a; }
+        .letter-box { background: #fff9fa; border: 2px solid #ffcad4; border-radius: 20px; padding: 15px; margin: 10px 0; }
+        .name-h { font-family: var(--f); color: #d81b60; font-size: 26px; }
+        .btn { border-radius: 30px; border: none; cursor: pointer; font-family: var(--s); font-size: 20px; width: 100%; margin-top: 10px; padding: 10px; }
+        .btn-p { background: linear-gradient(45deg, #ff3385, #ff6b95); color: white; }
+        #muteBtn { position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; background: white; border: none; z-index: 1000; }
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border-radius: 12px; border: 1px solid #ffdae3; font-family: var(--s); font-size: 18px; }
         .hidden { display: none !important; }
-        .pre-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-        .pre-grid img { width: 100%; height: 50px; object-fit: cover; border-radius: 8px; }
+        .final-quote { font-family: var(--s); font-size: 18px; color: #d81b60; opacity: 0; transition: 2s; margin-top: 10px; }
+        .final-quote.show { opacity: 1; }
     </style>
 </head>
 <body>
 
     <div class="brand-logo">Designed by @soumajit !! ✨</div>
-
     <button id="muteBtn" onclick="toggleMute()">🎵</button>
     <audio id="bgMusic" loop> <source src="music.mp3" type="audio/mpeg"> </audio>
 
     <div id="step-1" class="card">
-        <h1 class="title-stylish" style="font-family: var(--fancy-font); color: var(--primary-pink); font-size: 26px;">Surprise Creator ❤️</h1>
-        <input type="text" id="pName" placeholder="Partner Name ✨">
-        <textarea id="pMsg" rows="3" placeholder="Write a special message..."></textarea>
-        <div class="upload-box" onclick="document.getElementById('fileIn').click()">📤 Upload 6 Sweet Photos</div>
-        <input type="file" id="fileIn" accept="image/*" multiple hidden>
-        <div id="preGrid" class="pre-grid"></div>
-        <button class="btn btn-pink" onclick="goToStep2()">Generate Surprise ✨</button>
+        <h2 style="font-family: var(--f); color: var(--p);">Create Surprise ❤️</h2>
+        <input type="text" id="pName" placeholder="Partner Name">
+        <textarea id="pMsg" placeholder="Special Message"></textarea>
+        <p style="font-size: 12px; margin-bottom: 5px;">Upload 1 Photo (Main)</p>
+        <input type="file" id="fileIn" accept="image/*">
+        <button class="btn btn-p" onclick="generateLink()">Generate & View ✨</button>
     </div>
 
-    <div id="step-2" class="card hidden">
-        <div style="font-size:50px;">🎉</div>
-        <h2 style="font-family: var(--fancy-font); color: var(--primary-pink);">Ready for the Magic?</h2>
-        <button class="btn btn-pink" onclick="startLoading()">🪄 Preview Page</button>
+    <div id="step-loading" class="card hidden">
+        <h2 style="font-family: var(--f); color: var(--p);">Cuteness Loading...</h2>
+        <h1 id="perc" style="font-size: 40px; color: var(--p);">0%</h1>
+        <button id="tapBtn" class="btn hidden" style="background:white; color:#ff3385;" onclick="startTyping()">Tap to Open 💌</button>
     </div>
 
-    <div id="step-3" class="card hidden">
-        <h1 style="font-family: var(--fancy-font); color: var(--primary-pink);">Cuteness Loading...</h1>
-        <div class="progress-container"><div id="fill" class="progress-fill"></div></div>
-        <div id="perc" class="perc-val">0%</div>
-        <button id="tapBtn" class="btn hidden" style="background:white; color:#ff3385;" onclick="showTextAnim()">Tap to Open 💌</button>
-    </div>
-
-    <div id="step-4" class="card hidden">
-        <div style="font-size:40px; margin-bottom:15px;">💖</div>
+    <div id="step-typing" class="card hidden">
         <div id="animatedText" class="typing-text"></div>
-        <button id="nextAfterTyping" class="btn btn-pink hidden" onclick="goToValentinePropose()">Next ✨</button>
+        <button id="nextBtn" class="btn btn-p hidden" onclick="showPropose()">Next ✨</button>
     </div>
 
-    <div id="step-5" class="card hidden">
-        <img src="panda.gif" style="width: 120px; margin-bottom: 10px; border-radius: 15px;">
+    <div id="step-propose" class="card hidden">
+        <img src="panda.gif" style="width: 100px; border-radius: 10px;">
         <div class="letter-box">
-            <span id="finalName" class="name-highlight"></span>
-            <span class="propose-text">Will you be my Valentine? 🥺</span>
+            <span id="displayPartnerName" class="name-h"></span><br>
+            <span style="font-family: var(--s); font-size: 20px;">Will you be my Valentine? 🥺</span>
         </div>
-        <div style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
-            <button class="btn btn-pink" style="padding:10px 30px; width: auto;" onclick="showMemories()">YES 🥰</button>
-            <button id="noBtn" class="btn" style="background:#eee; color:#888; padding:10px 30px; width: auto;" onmouseover="moveNo()">NO 🥺</button>
-        </div>
+        <button class="btn btn-p" onclick="showFinal()">YES 🥰</button>
+        <button id="noBtn" class="btn" style="background:#eee;" onmouseover="moveNo()">NO 🥺</button>
     </div>
 
-    <div id="step-6" class="card hidden">
-        <h2 id="galleryTitle" style="font-family: var(--fancy-font); color: var(--primary-pink); font-size: 20px;"></h2>
+    <div id="step-final" class="card hidden">
+        <h2 class="name-h">Sweet Memories ✨</h2>
         <div id="photoGallery" class="photo-gallery"></div>
-        <p id="finalQuoteText" class="final-quote">
-            "I fell in love with you because of the million things you never knew you were doing."
-        </p>
-        <h3 class="name-highlight" style="margin-top:10px; font-size: 22px;">Forever Yours! ❤️</h3>
-        
-        <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
-            <button class="btn btn-pink" onclick="copyMyLink()">🔗 Copy Surprise Link</button>
-            <button class="btn btn-outline" onclick="location.reload()">🎁 Generate New Surprise</button>
-        </div>
+        <p id="finalQuoteText" class="final-quote">"I fell in love with you because of the million things you never knew you were doing."</p>
+        <button class="btn btn-p" style="margin-top:15px; font-size: 14px;" onclick="copyLink()">🔗 Copy Link to Share</button>
+        <button class="btn" style="font-size: 12px;" onclick="window.location.search=''; location.reload();">Create New 🎁</button>
     </div>
 
     <script>
-        let imgs = [];
+        let partnerName = "", message = "", photoData = "";
         const audio = document.getElementById('bgMusic');
 
-        function toggleMute() {
-            audio.muted = !audio.muted;
-            document.getElementById('muteBtn').innerText = audio.muted ? "🔇" : "🎵";
+        // চেক করা হচ্ছে লিঙ্কে ডাটা আছে কিনা
+        window.onload = () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('n')) {
+                partnerName = params.get('n');
+                message = params.get('m');
+                // লোডিং স্ক্রিন থেকে শুরু হবে যদি ডাটা থাকে
+                document.getElementById('step-1').classList.add('hidden');
+                document.getElementById('step-loading').classList.remove('hidden');
+                startLoadingBar();
+            }
+        };
+
+        function generateLink() {
+            const n = document.getElementById('pName').value;
+            const m = document.getElementById('pMsg').value;
+            if (!n || !m) return alert("Fill all fields!");
+            
+            // URL আপডেট করা (ডাটা সেভ রাখার জন্য)
+            const newUrl = `${window.location.origin}${window.location.pathname}?n=${encodeURIComponent(n)}&m=${encodeURIComponent(m)}`;
+            window.history.pushState({}, '', newUrl);
+            location.reload(); // রিলোড দিলে উপরের window.onload রান করবে
         }
 
-        document.getElementById('fileIn').addEventListener('change', function() {
-            const grid = document.getElementById('preGrid'); grid.innerHTML = ''; imgs = [];
-            Array.from(this.files).slice(0, 6).forEach(f => {
-                const r = new FileReader();
-                r.onload = (e) => {
-                    imgs.push(e.target.result);
-                    const i = document.createElement('img'); i.src = e.target.result; grid.appendChild(i);
-                }
-                r.readAsDataURL(f);
-            });
-        });
-
-        function goToStep2() {
-            if(!document.getElementById('pName').value) return alert("Enter Name!");
-            document.getElementById('step-1').classList.add('hidden');
-            document.getElementById('step-2').classList.remove('hidden');
-        }
-
-        function startLoading() {
+        function startLoadingBar() {
             audio.play();
-            document.getElementById('step-2').classList.add('hidden');
-            document.getElementById('step-3').classList.remove('hidden');
             let w = 0;
-            const interval = setInterval(() => {
+            const int = setInterval(() => {
                 w++;
-                if(w <= 120) {
-                    document.getElementById('fill').style.width = (w/1.2) + '%';
-                    document.getElementById('perc').innerText = w + "%";
-                } else {
-                    clearInterval(interval);
+                document.getElementById('perc').innerText = w + "%";
+                if (w >= 120) {
+                    clearInterval(int);
                     document.getElementById('tapBtn').classList.remove('hidden');
                 }
-            }, 40);
+            }, 30);
         }
 
-        function showTextAnim() {
-            document.getElementById('step-3').classList.add('hidden');
-            document.getElementById('step-4').classList.remove('hidden');
-            const fullText = document.getElementById('pMsg').value || "I Love You!";
-            const textDiv = document.getElementById('animatedText');
-            let index = 0;
+        function startTyping() {
+            document.getElementById('step-loading').classList.add('hidden');
+            document.getElementById('step-typing').classList.remove('hidden');
+            let i = 0;
             function type() {
-                if (index < fullText.length) {
-                    textDiv.innerHTML += fullText.charAt(index); index++;
-                    setTimeout(type, 80);
+                if (i < message.length) {
+                    document.getElementById('animatedText').innerHTML += message.charAt(i);
+                    i++; setTimeout(type, 70);
                 } else {
-                    document.getElementById('nextAfterTyping').classList.remove('hidden');
+                    document.getElementById('nextBtn').classList.remove('hidden');
                 }
             }
             type();
         }
 
-        function goToValentinePropose() {
-            document.getElementById('step-4').classList.add('hidden');
-            document.getElementById('step-5').classList.remove('hidden');
-            document.getElementById('finalName').innerText = document.getElementById('pName').value;
+        function showPropose() {
+            document.getElementById('step-typing').classList.add('hidden');
+            document.getElementById('step-propose').classList.remove('hidden');
+            document.getElementById('displayPartnerName').innerText = partnerName;
         }
 
-        function showMemories() {
-            document.getElementById('step-5').classList.add('hidden');
-            document.getElementById('step-6').classList.remove('hidden');
-            document.getElementById('galleryTitle').innerHTML = `${document.getElementById('pName').value}'s Memories ✨`;
-            const gallery = document.getElementById('photoGallery');
-            gallery.innerHTML = '';
-            
-            imgs.forEach((src, idx) => {
-                const img = document.createElement('img');
-                img.src = src;
-                gallery.appendChild(img);
-                setTimeout(() => { img.classList.add('show'); }, 400 + (idx * 350));
-            });
-
-            setTimeout(() => document.getElementById('finalQuoteText').classList.add('show'), 1800);
+        function showFinal() {
+            document.getElementById('step-propose').classList.add('hidden');
+            document.getElementById('step-final').classList.remove('hidden');
+            // এখানে আপনি চাইলে আরও ছবি যোগ করার কোড দিতে পারেন
+            setTimeout(() => { document.getElementById('finalQuoteText').classList.add('show'); }, 1000);
         }
 
-        function copyMyLink() {
-            const el = document.createElement('textarea');
-            el.value = window.location.href;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            alert("Surprise Link Copied! 🔗");
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link Copied! Share it with your partner. ❤️");
         }
 
+        function toggleMute() { audio.muted = !audio.muted; }
         function moveNo() {
-            const btn = document.getElementById('noBtn');
-            btn.style.position = 'absolute';
-            btn.style.left = Math.random() * 70 + '%';
-            btn.style.top = Math.random() * 70 + '%';
+            const b = document.getElementById('noBtn');
+            b.style.position = 'absolute';
+            b.style.left = Math.random() * 80 + '%';
+            b.style.top = Math.random() * 80 + '%';
         }
     </script>
 </body>
