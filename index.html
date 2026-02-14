@@ -28,7 +28,7 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Generator Area */
+        /* Generator Section */
         .upload-area { border: 2px dashed #bbb; border-radius: 15px; padding: 20px; margin: 15px 0; cursor: pointer; background: #fff; }
         .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
         .preview-grid img { width: 100%; height: 70px; object-fit: cover; border-radius: 8px; border: 2px solid white; }
@@ -42,10 +42,10 @@
         .heart.open-left { transform: rotate(-120deg); }
         .heart.open-right { transform: rotate(120deg); }
 
-        /* Buttons Style */
+        /* Buttons */
         .btn { border-radius: 25px; border: none; cursor: pointer; font-family: var(--s); font-size: 22px; transition: 0.3s; padding: 12px 25px; }
         .btn-p { background: linear-gradient(45deg, #ff3385, #ff6b95); color: white; box-shadow: 0 5px 15px rgba(255,51,133,0.3); width: 100%; }
-        #yesBtn { display: inline-block; width: auto; z-index: 100; }
+        #yesBtn { display: inline-block; width: auto; z-index: 100; transition: 0.2s; }
         #noBtn { background: #eee; color: #888; display: inline-block; width: auto; position: relative; }
 
         /* Stylish Slanted Text */
@@ -70,10 +70,10 @@
 
     <div id="step-1" class="card">
         <h2 style="font-family: var(--f); color: var(--p);">Surprise Maker ❤️</h2>
-        <input type="text" id="pName" placeholder="Partner's Name" style="width:100%; padding:10px; margin:10px 0; border-radius:10px; border:1px solid #ddd;">
-        <textarea id="pMsg" placeholder="Write a romantic message..." rows="3" style="width:100%; padding:10px; margin:10px 0; border-radius:10px; border:1px solid #ddd;"></textarea>
+        <input type="text" id="pName" placeholder="Partner's Name" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd;">
+        <textarea id="pMsg" placeholder="Write a romantic message..." rows="3" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd;"></textarea>
         <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-            <p style="font-size: 13px; color: #777;">📤 Click to upload 6 photos</p>
+            <p id="upTxt" style="font-size: 13px; color: #777;">📤 Click to upload 6 photos</p>
             <input type="file" id="fileInput" accept="image/*" multiple hidden>
         </div>
         <div id="previewGrid" class="preview-grid"></div>
@@ -102,7 +102,7 @@
 
     <div id="step-msg-page" class="card hidden">
         <img src="panda.gif" style="width: 100px; margin-bottom: 15px; border-radius: 10px;">
-        <div id="displayMsg" style="font-style: italic; color: #555; margin-bottom: 20px; font-size: 16px; border-left: 4px solid var(--p); padding-left: 10px; text-align: left;"></div>
+        <div id="displayMsg" style="font-style: italic; color: #555; margin-bottom: 20px; border-left: 4px solid var(--p); padding-left: 10px; text-align: left;"></div>
         <button class="btn btn-p" onclick="showPropose()">Next ✨</button>
     </div>
 
@@ -138,30 +138,54 @@
         let yesScale = 1;
         const audio = document.getElementById('bgMusic');
 
-        // গ্যালারি থেকে ছবি নিয়ে প্রিভিউ দেখানো
-        document.getElementById('fileInput').addEventListener('change', function(e) {
+        // Image Compressor Logic
+        async function compressImage(base64Str) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = base64Str;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 400; 
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.6));
+                };
+            });
+        }
+
+        document.getElementById('fileInput').addEventListener('change', async function(e) {
             const files = Array.from(e.target.files).slice(0, 6);
             const grid = document.getElementById('previewGrid');
-            grid.innerHTML = ''; pImgs = [];
-            files.forEach(file => {
+            const upTxt = document.getElementById('upTxt');
+            grid.innerHTML = '<p style="font-size:12px; color:var(--p);">Compressing photos...</p>';
+            pImgs = [];
+
+            for (let file of files) {
                 const reader = new FileReader();
-                reader.onload = (ev) => {
-                    pImgs.push(ev.target.result);
-                    const img = document.createElement('img');
-                    img.src = ev.target.result;
-                    grid.appendChild(img);
-                };
-                reader.readAsDataURL(file);
+                const result = await new Promise((resolve) => {
+                    reader.onload = (ev) => resolve(ev.target.result);
+                    reader.readAsDataURL(file);
+                });
+                const compressed = await compressImage(result);
+                pImgs.push(compressed);
+            }
+            grid.innerHTML = '';
+            pImgs.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                grid.appendChild(img);
             });
+            upTxt.innerText = `Photos Uploaded: ${pImgs.length}`;
         });
 
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
             if (params.has('n')) {
-                // যাকে লিঙ্ক পাঠানো হয়েছে সে ছবিগুলো দেখতে পাবে
                 const savedImgs = localStorage.getItem('temp_imgs');
                 if(savedImgs) pImgs = JSON.parse(savedImgs);
-
                 document.getElementById('step-1').classList.add('hidden');
                 document.getElementById('step-loading').classList.remove('hidden');
                 let w = 0;
@@ -179,15 +203,17 @@
         function generateSurprise() {
             const n = document.getElementById('pName').value;
             const m = document.getElementById('pMsg').value;
-            if(!n || !m || pImgs.length === 0) return alert("সব তথ্য পূরণ করো!");
+            if(!n || !m || pImgs.length === 0) return alert("Please fill Name, Message and 6 Photos!");
 
-            // লোকাল স্টোরেজে ছবি সেভ করা (যাতে লিঙ্কে পাঠানো যায়)
-            localStorage.setItem('temp_imgs', JSON.stringify(pImgs));
-            
-            const url = `${window.location.origin}${window.location.pathname}?n=${encodeURIComponent(n)}&m=${encodeURIComponent(m)}`;
-            navigator.clipboard.writeText(url);
-            alert("লিঙ্ক কপি হয়েছে! এখন যাকে পাঠাবে সেও তোমার ছবি দেখতে পাবে। ❤️");
-            window.location.href = url;
+            try {
+                localStorage.setItem('temp_imgs', JSON.stringify(pImgs));
+                const url = `${window.location.origin}${window.location.pathname}?n=${encodeURIComponent(n)}&m=${encodeURIComponent(m)}`;
+                navigator.clipboard.writeText(url);
+                alert("Link Copied Successfully! ❤️");
+                window.location.href = url;
+            } catch (e) {
+                alert("Too much data! Try using fewer photos or smaller ones.");
+            }
         }
 
         function startHeartAnim() {
@@ -247,7 +273,7 @@
 
         function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert("লিঙ্ক কপি হয়েছে! ❤️");
+            alert("Link Copied! ❤️");
         }
 
         function toggleMute() { audio.muted = !audio.muted; }
