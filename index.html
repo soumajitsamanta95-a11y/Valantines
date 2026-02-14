@@ -3,58 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Valentine Surprise ❤️</title>
+    <title>Valentine Surprise ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --p: #ff4d94; --s: 'Dancing Script', cursive; --f: 'Pacifico', cursive; }
+        :root { --p: #ff6b95; --s: 'Dancing Script', cursive; --f: 'Pacifico', cursive; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(180deg, #fce4ec 0%, #e1bee7 100%);
             min-height: 100vh; display: flex; justify-content: center; align-items: center;
-            flex-direction: column; text-align: center; color: #444; overflow: hidden;
-            position: relative;
+            flex-direction: column; text-align: center; color: #444; padding: 20px;
+            overflow-x: hidden;
         }
 
-        /* Floating Stars Animation */
-        .star { position: absolute; color: #ffeb3b; font-size: 15px; animation: float 6s linear infinite; opacity: 0.8; z-index: 0; }
-        @keyframes float {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        .brand-logo { font-family: var(--f); font-size: 16px; color: rgba(216, 27, 96, 0.7); margin-bottom: 12px; z-index: 10; }
+        .brand-logo { font-family: var(--f); font-size: 16px; color: rgba(216, 27, 96, 0.7); margin-bottom: 12px; }
 
         .card {
-            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px);
-            border-radius: 30px; padding: 30px; width: 90%; max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.6);
-            animation: fadeIn 0.8s ease; z-index: 10; position: relative;
+            background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(15px);
+            border-radius: 30px; padding: 25px; width: 100%; max-width: 400px;
+            box-shadow: 0 15px 35px rgba(255, 107, 149, 0.2); border: 1px solid white;
+            animation: fadeIn 0.8s ease;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .btn-bar {
-            background: white; color: var(--p); border-radius: 50px; padding: 15px;
-            font-family: var(--s); font-size: 20px; width: 100%; border: none;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-top: 20px;
+        .upload-area { border: 2px dashed #bbb; border-radius: 15px; padding: 20px; margin: 15px 0; cursor: pointer; background: #fff; }
+        .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+        .preview-grid img { width: 100%; height: 70px; object-fit: cover; border-radius: 8px; border: 2px solid white; }
+
+        #perc { font-size: 50px; color: var(--p); font-family: var(--f); margin: 10px 0; }
+        .heart-container { position: relative; width: 100px; height: 90px; margin: 30px auto; }
+        .heart { position: absolute; width: 50px; height: 80px; background: var(--p); border-radius: 50px 50px 0 0; transition: 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .heart.left { left: 10px; transform: rotate(-45deg); transform-origin: 100% 100%; }
+        .heart.right { left: 40px; transform: rotate(45deg); transform-origin: 0 100%; }
+        .heart.open-left { transform: rotate(-120deg); }
+        .heart.open-right { transform: rotate(120deg); }
+
+        .btn { border-radius: 25px; border: none; cursor: pointer; font-family: var(--s); font-size: 22px; transition: 0.3s; padding: 12px 25px; }
+        .btn-p { background: linear-gradient(45deg, #ff3385, #ff6b95); color: white; box-shadow: 0 5px 15px rgba(255,51,133,0.3); width: 100%; }
+        #yesBtn { display: inline-block; width: auto; z-index: 100; transition: 0.2s; }
+        #noBtn { background: #eee; color: #888; display: inline-block; width: auto; position: relative; }
+
+        .sweet-text {
+            font-family: var(--s); font-size: 20px; color: #d81b60; margin: 20px 0;
+            transform: rotate(-5deg); line-height: 1.3; font-weight: bold;
         }
-
-        .btn-row { display: flex; gap: 20px; justify-content: center; margin-top: 30px; position: relative; min-height: 60px; }
-        .yes-btn { background: #4caf50; color: white; border-radius: 50px; padding: 12px 30px; font-size: 20px; border: none; cursor: pointer; z-index: 11; transition: 0.3s; }
-        .no-btn { background: #f44336; color: white; border-radius: 50px; padding: 12px 30px; font-size: 20px; border: none; cursor: pointer; transition: 0.1s ease-out; position: absolute; z-index: 10; }
-
-        .typing { font-family: var(--s); font-size: 22px; color: #d81b60; line-height: 1.5; min-height: 60px; }
 
         .photo-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
-        .photo-gallery img { width: 100%; border-radius: 15px; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); opacity: 0; transform: scale(0.8); transition: 0.6s ease forwards; }
+        .photo-gallery img { width: 100%; border-radius: 15px; opacity: 0; transform: scale(0.5); transition: 0.8s ease; border: 3px solid white; }
         .photo-gallery img.show { opacity: 1; transform: scale(1); }
 
         .hidden { display: none !important; }
-        #muteBtn { position: fixed; bottom: 20px; right: 20px; background: white; border-radius: 50%; width: 45px; height: 45px; border: none; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .pink-heart { color: var(--p); font-size: 60px; margin-bottom: 10px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        #muteBtn { position: fixed; top: 20px; right: 20px; background: white; border-radius: 50%; width: 40px; height: 40px; border: none; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -65,50 +66,64 @@
 
     <div id="step-1" class="card">
         <h2 style="font-family: var(--f); color: var(--p);">Surprise Maker ❤️</h2>
-        <input type="text" id="pName" placeholder="Partner Name" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd; outline:none;">
-        <textarea id="pMsg" placeholder="Write a romantic message..." rows="3" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd; outline:none; resize:none;"></textarea>
-        <div id="dropZone" style="border: 2px dashed #ff4d94; padding: 20px; border-radius: 15px; cursor: pointer;" onclick="document.getElementById('fileInput').click()">
-            <p id="upTxt" style="font-size: 14px; color: #ff4d94; font-weight: bold;">📤 Upload 6 Photos</p>
+        <input type="text" id="pName" placeholder="Partner's Name" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd;">
+        <textarea id="pMsg" placeholder="Write a romantic message..." rows="3" style="width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ddd;"></textarea>
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <p id="upTxt" style="font-size: 13px; color: #777;">📤 Click to upload 6 photos</p>
             <input type="file" id="fileInput" accept="image/*" multiple hidden>
         </div>
-        <button class="btn-bar" id="genBtn" onclick="generateLink()" style="background: var(--p); color: white;">Generate & Copy Link ✨</button>
+        <div id="previewGrid" class="preview-grid"></div>
+        <button class="btn btn-p" onclick="generateSurprise()" style="margin-top:10px;">Generate & Copy Link ✨</button>
     </div>
 
     <div id="step-loading" class="card hidden">
-        <div class="pink-heart">💖</div>
-        <h2 style="color: var(--p); font-family: var(--s); font-size: 32px;">Loading...</h2>
-        <h1 id="perc" style="font-family: var(--f); color: var(--p); font-size: 45px;">0%</h1>
+        <p style="font-family: var(--f); color: var(--p);">Loading your cuteness...</p>
+        <h1 id="perc">0%</h1>
     </div>
 
     <div id="step-tap" class="card hidden">
-        <div class="pink-heart" style="color: red;">❤️</div>
-        <h2 style="color: red; font-family: var(--s); font-size: 32px;">Cuteness Overload...</h2>
-        <button class="btn-bar" onclick="startSurprise()">Tap to Open 💌</button>
+        <h2 style="font-family: var(--f); color: var(--p);">Hold on its too much!</h2>
+        <button class="btn btn-p" style="margin-top:20px;" onclick="startHeartAnim()">Tap to Open 💌</button>
     </div>
 
-    <div id="step-heart-anim" class="card hidden">
-        <div style="font-size: 50px;">✨💖✨</div>
-        <h2 style="font-family: var(--s); font-size: 30px; color: var(--p); margin-top: 15px;">My heart opens for you... ✨</h2>
+    <div id="step-heart" class="card hidden">
+        <div class="heart-container">
+            <div class="heart left" id="hL"></div>
+            <div class="heart right" id="hR"></div>
+        </div>
+        <p id="hTag" style="font-family: var(--s); opacity:0; transition:1s;">My heart open for you ❤️</p>
+    </div>
+
+    <div id="step-msg-page" class="card hidden">
+        <img src="panda.gif" style="width: 100px; margin-bottom: 15px; border-radius: 10px;">
+        <div id="displayMsg" style="font-style: italic; color: #555; margin-bottom: 20px; border-left: 4px solid var(--p); padding-left: 10px; text-align: left;"></div>
+        <button class="btn btn-p" onclick="showPropose()">Next ✨</button>
     </div>
 
     <div id="step-propose" class="card hidden">
-        <img src="https://media.tenor.com/79_u2v7iN3oAAAAj/bear-panda.gif" style="width: 130px;">
-        <p id="proposeName" style="font-family: var(--f); color: var(--p); font-size: 22px;"></p>
-        <p style="font-family: var(--s); font-size: 28px;">Will you be my Valentine? 🥺</p>
-        <div class="btn-row">
-            <button class="yes-btn" id="yesBtn" onclick="showTypingMsg()">YES 🥰</button>
-            <button class="no-btn" id="noBtn" onmouseover="moveNo()" ontouchstart="moveNo()">NO 🥺</button>
+        <img src="panda.gif" style="width: 120px; margin-bottom: 10px;">
+        <p id="toName" style="font-family: var(--f); color: var(--p); font-size: 18px;"></p>
+        <p style="font-family: var(--s); font-size: 26px;">Will you be my Valentine? 🥺</p>
+        <div style="display:flex; gap:20px; justify-content:center; margin-top:30px; align-items:center;">
+            <button class="btn btn-p" id="yesBtn" onclick="showSweetOption()">YES 🥰</button>
+            <button class="btn" id="noBtn" onmouseover="moveNo()">NO 🥺</button>
         </div>
     </div>
 
-    <div id="step-typing" class="card hidden">
-        <div class="typing" id="typingArea"></div>
-        <button class="btn-bar hidden" id="sweetMemBtn" onclick="showGallery()">Sweet Memories 💖</button>
+    <div id="step-sweet-option" class="card hidden">
+        <div class="sweet-text">
+            I fell in love with you<br>
+            because of the million<br>
+            things you never knew<br>
+            you were doing.
+        </div>
+        <button class="btn btn-p" onclick="showFinalGallery()">💖 Sweet Memories 💖</button>
     </div>
 
     <div id="step-final" class="card hidden">
+        <h2 style="font-family: var(--f); color: var(--p);">Our Journey ✨</h2>
         <div id="finalGallery" class="photo-gallery"></div>
-        <p style="font-family: var(--s); font-size: 26px; margin-top: 20px; color: var(--p);">Forever Yours! ❤️</p>
+        <button class="btn btn-p" style="margin-top:20px; font-size:16px;" onclick="copyLink()">🔗 Share Again</button>
     </div>
 
     <script>
@@ -116,156 +131,138 @@
         let yesScale = 1;
         const audio = document.getElementById('bgMusic');
 
-        function createStars() {
-            for (let i = 0; i < 30; i++) {
-                let star = document.createElement('div');
-                star.className = 'star';
-                star.innerHTML = i % 2 === 0 ? '★' : '✨';
-                star.style.left = Math.random() * 100 + 'vw';
-                star.style.animationDuration = (Math.random() * 3 + 4) + 's';
-                document.body.appendChild(star);
-            }
-        }
-        createStars();
-
-        // ⚡ অত্যাধুনিক ইমেজ কম্প্রেসর (MB কমানোর জন্য)
         async function compressImage(base64Str) {
             return new Promise((resolve) => {
                 const img = new Image();
                 img.src = base64Str;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 300; // সাইজ আরও কমানো হলো লিঙ্কের সুবিধার্থে
+                    const MAX_WIDTH = 300; // সাইজ ছোট রাখা হচ্ছে যাতে লিঙ্ক কাজ করে
                     const scaleSize = MAX_WIDTH / img.width;
                     canvas.width = MAX_WIDTH;
                     canvas.height = img.height * scaleSize;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    resolve(canvas.toDataURL('image/jpeg', 0.4)); // কোয়ালিটি ৪০% রাখা হলো
+                    resolve(canvas.toDataURL('image/jpeg', 0.5));
                 };
             });
         }
 
         document.getElementById('fileInput').addEventListener('change', async function(e) {
             const files = Array.from(e.target.files).slice(0, 6);
-            if(files.length === 0) return;
-            
-            const upTxt = document.getElementById('upTxt');
-            const genBtn = document.getElementById('genBtn');
-            
-            upTxt.innerText = "⏳ Compressing... Please wait!";
-            genBtn.disabled = true;
-            genBtn.style.opacity = "0.5";
-            
+            const grid = document.getElementById('previewGrid');
+            grid.innerHTML = '<p style="font-size:12px; color:var(--p);">Processing...</p>';
             pImgs = [];
             for (let file of files) {
                 const reader = new FileReader();
-                const raw = await new Promise(r => { 
-                    reader.onload = e => r(e.target.result); 
-                    reader.readAsDataURL(file); 
+                const result = await new Promise((resolve) => {
+                    reader.onload = (ev) => resolve(ev.target.result);
+                    reader.readAsDataURL(file);
                 });
-                const compressed = await compressImage(raw);
+                const compressed = await compressImage(result);
                 pImgs.push(compressed);
             }
-            
-            upTxt.innerText = "✅ " + pImgs.length + " Photos Compressed!";
-            genBtn.disabled = false;
-            genBtn.style.opacity = "1";
+            grid.innerHTML = '';
+            pImgs.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                grid.appendChild(img);
+            });
+            document.getElementById('upTxt').innerText = `Uploaded: ${pImgs.length} photos`;
         });
-
-        function generateLink() {
-            const n = document.getElementById('pName').value;
-            const m = document.getElementById('pMsg').value;
-            
-            if(!n || !m || pImgs.length === 0) {
-                alert("Please fill Name, Message and select Photos!");
-                return;
-            }
-            
-            const data = { n, m, i: pImgs };
-            try {
-                const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-                const url = window.location.origin + window.location.pathname + "?v=" + encoded;
-                
-                if(url.length > 8000) {
-                    alert("লিঙ্কটি অনেক বড় হয়ে গেছে! দয়া করে কম সাইজের বা কম ছবি (যেমন ৪টি) দিয়ে চেষ্টা করুন।");
-                    return;
-                }
-                
-                navigator.clipboard.writeText(url).then(() => {
-                    alert("Link Generated & Copied! ❤️");
-                });
-            } catch (e) {
-                alert("Error generating link. Try with smaller images.");
-            }
-        }
 
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
-            if (params.has('v')) {
-                const data = JSON.parse(decodeURIComponent(escape(atob(params.get('v')))));
-                window.pData = data;
+            if (params.has('n')) {
+                // লিঙ্কে পাঠানো ছবিগুলো রিকভার করা
+                const imgData = params.get('imgs');
+                if(imgData) pImgs = JSON.parse(decodeURIComponent(imgData));
+
                 document.getElementById('step-1').classList.add('hidden');
                 document.getElementById('step-loading').classList.remove('hidden');
                 let w = 0;
-                let int = setInterval(() => {
-                    w += 2; 
-                    document.getElementById('perc').innerText = w + "%";
+                const int = setInterval(() => {
+                    w++; document.getElementById('perc').innerText = w + "%";
                     if(w >= 100) { 
-                        clearInterval(int); 
-                        document.getElementById('step-loading').classList.add('hidden'); 
-                        document.getElementById('step-tap').classList.remove('hidden'); 
+                        clearInterval(int);
+                        document.getElementById('step-loading').classList.add('hidden');
+                        document.getElementById('step-tap').classList.remove('hidden');
                     }
-                }, 50);
+                }, 30);
             }
         };
 
-        function startSurprise() {
+        function generateSurprise() {
+            const n = document.getElementById('pName').value;
+            const m = document.getElementById('pMsg').value;
+            if(!n || !m || pImgs.length === 0) return alert("Please complete everything!");
+
+            const imgString = encodeURIComponent(JSON.stringify(pImgs));
+            const url = `${window.location.origin}${window.location.pathname}?n=${encodeURIComponent(n)}&m=${encodeURIComponent(m)}&imgs=${imgString}`;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Surprise Link Copied! Send it to your partner. ❤️");
+            });
+        }
+
+        function startHeartAnim() {
             audio.play().catch(() => {});
             document.getElementById('step-tap').classList.add('hidden');
-            document.getElementById('step-heart-anim').classList.remove('hidden');
+            document.getElementById('step-heart').classList.remove('hidden');
             setTimeout(() => {
-                document.getElementById('step-heart-anim').classList.add('hidden');
-                document.getElementById('step-propose').classList.remove('hidden');
-                document.getElementById('proposeName').innerText = "To " + window.pData.n;
-            }, 2500);
+                document.getElementById('hL').classList.add('open-left');
+                document.getElementById('hR').classList.add('open-right');
+                document.getElementById('hTag').style.opacity = "1";
+                setTimeout(() => {
+                    document.getElementById('step-heart').classList.add('hidden');
+                    showCustomMsg();
+                }, 2000);
+            }, 500);
+        }
+
+        function showCustomMsg() {
+            document.getElementById('step-msg-page').classList.remove('hidden');
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById('displayMsg').innerText = decodeURIComponent(params.get('m'));
+        }
+
+        function showPropose() {
+            document.getElementById('step-msg-page').classList.add('hidden');
+            document.getElementById('step-propose').classList.remove('hidden');
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById('toName').innerText = `To ${decodeURIComponent(params.get('n'))},`;
         }
 
         function moveNo() {
             const no = document.getElementById('noBtn');
             const yes = document.getElementById('yesBtn');
+            no.style.position = 'fixed';
             no.style.left = Math.random() * 80 + '%';
-            no.style.top = (Math.random() * 400 - 200) + 'px';
-            yesScale += 0.15;
+            no.style.top = Math.random() * 80 + '%';
+            yesScale += 0.3;
             yes.style.transform = `scale(${yesScale})`;
         }
 
-        function showTypingMsg() {
+        function showSweetOption() {
             document.getElementById('step-propose').classList.add('hidden');
-            document.getElementById('step-typing').classList.remove('hidden');
-            let text = window.pData.m;
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    document.getElementById('typingArea').innerHTML += text.charAt(i);
-                    i++; setTimeout(type, 60);
-                } else {
-                    document.getElementById('sweetMemBtn').classList.remove('hidden');
-                }
-            }
-            type();
+            document.getElementById('step-sweet-option').classList.remove('hidden');
         }
 
-        function showGallery() {
-            document.getElementById('step-typing').classList.add('hidden');
+        function showFinalGallery() {
+            document.getElementById('step-sweet-option').classList.add('hidden');
             document.getElementById('step-final').classList.remove('hidden');
-            const gal = document.getElementById('finalGallery');
-            window.pData.i.forEach((src, idx) => {
+            const gallery = document.getElementById('finalGallery');
+            pImgs.forEach((src, idx) => {
                 const img = document.createElement('img');
                 img.src = src;
-                gal.appendChild(img);
-                setTimeout(() => img.classList.add('show'), idx * 300);
+                gallery.appendChild(img);
+                setTimeout(() => img.classList.add('show'), 300 + (idx * 200));
             });
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link Copied! ❤️");
         }
 
         function toggleMute() { audio.muted = !audio.muted; }
